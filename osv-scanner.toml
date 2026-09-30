@@ -1,0 +1,31 @@
+# Vulnerabilities below are all in transitive, dev-only dependencies pulled
+# in by @lhci/cli's bundled Puppeteer/Lighthouse (used only to drive headless
+# Chrome for the Lighthouse CI check, never shipped in the built site). No
+# fix is available yet without a breaking downgrade of @lhci/cli - revisit
+# before the dates below and drop any entries that have since been fixed
+# upstream.
+
+[[IgnoredVulns]]
+id = "GHSA-jmr9-qjv8-65gv" # extract-zip, via @lhci/cli -> lighthouse -> puppeteer-core
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of @lhci/cli; no fix available without a breaking downgrade"
+
+[[IgnoredVulns]]
+id = "GHSA-7pqw-9j4j-h8q3" # extract-zip, via @lhci/cli -> lighthouse -> puppeteer-core
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of @lhci/cli; no fix available without a breaking downgrade"
+
+[[IgnoredVulns]]
+id = "GHSA-52f5-9888-hmc6" # tmp, via @lhci/cli -> lighthouse -> puppeteer-core
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of @lhci/cli; no fix available without a breaking downgrade"
+
+[[IgnoredVulns]]
+id = "GHSA-ph9p-34f9-6g65" # tmp, via @lhci/cli -> lighthouse -> puppeteer-core
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of @lhci/cli; no fix available without a breaking downgrade"
+
+[[IgnoredVulns]]
+id = "GHSA-w5hq-g745-h8pq" # uuid, via @lhci/cli -> lighthouse -> puppeteer-core
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of @lhci/cli; no fix available without a breaking downgrade"

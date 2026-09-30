@@ -1,0 +1,10 @@
+# See https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+
+# Prose lines commonly exceed 80 chars (long links, wrapped sentences) -
+# wrapping isn't enforced anywhere else in the repo either.
+MD013: false
+
+# Every page's title comes from front matter and is rendered as an <h1> by
+# the layout, not written into the markdown body - a literal top-level
+# heading in the body would be a duplicate.
+MD041: false

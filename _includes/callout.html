@@ -1,0 +1,21 @@
+{% assign section = include.section %}
+<div class="callout">
+  {% if section.icon %}
+    <div class="callout__icon">
+      <img src="{{ section.icon | relative_url }}" alt="{{ section.icon_alt }}">
+    </div>
+  {% endif %}
+  <div class="callout__body">
+    <h2 class="callout__title">{{ section.title }}</h2>
+    <p class="callout__summary">{{ section.summary }}</p>
+    {% if section.body %}
+      <div class="callout__content">
+        {{ section.body | markdownify }}
+      </div>
+    {% endif %}
+    <a class="callout__link" href="{{ section.url | relative_url }}">
+      Read more<span class="sr-only"> about {{ section.title }}</span>
+      <span aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "_site",
+      "maxAutodiscoverUrls": 0,
+      "staticDirFileDiscoveryDepth": 4,
+      "numberOfRuns": 1,
+      "settings": {
+        "onlyCategories": ["accessibility"],
+        "chromeFlags": "--no-sandbox"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:accessibility": ["error", { "minScore": 0.9 }]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": "./.lighthouseci"
+    }
+  }
+}

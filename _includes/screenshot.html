@@ -1,0 +1,10 @@
+{% assign src = include.src | relative_url %}
+<figure class="screenshot">
+  <a href="{{ src }}" target="_blank" rel="noopener">
+    <img src="{{ src }}" alt="{{ include.alt }}">
+  </a>
+  <figcaption>
+    {{ include.caption }}
+    {%- if include.link_url %} <a href="{{ include.link_url }}" target="_blank" rel="noopener">{{ include.link_text }}</a>{% endif %}
+  </figcaption>
+</figure>

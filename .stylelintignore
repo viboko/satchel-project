@@ -1,0 +1,7 @@
+# A thin Jekyll asset-pipeline shim (needs the leading front matter to be
+# processed) - not valid CSS/SCSS on its own, and has no rules of its own
+# to lint. Actual styles live in _sass/custom.scss.
+assets/css/main.scss
+
+# Where CI vendors gems (ruby/setup-ruby's bundler-cache) - not our code.
+vendor/

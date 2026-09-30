@@ -1,0 +1,4 @@
+extends: stylelint-config-standard-scss
+rules:
+  # BEM naming (block__element, block--modifier) is used throughout.
+  selector-class-pattern: "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$"

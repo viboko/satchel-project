@@ -1,0 +1,634 @@
+// Palette drawn from the satchel logo (leather brown / near-black).
+$color-text: #241a10;
+$color-text-muted: #5a4a3c;
+$color-link: #6b3a1e;
+$color-link-visited: #4f2b16;
+$color-accent: #8a4a26;
+$color-border: #ddcbb0;
+$color-bg: #f6f0e7;
+$color-surface: #fff;
+$color-band-bg: #e8dcc8;
+$max-width-page: 64rem;
+$radius: 0.75rem;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+
+  // The header/footer band colour, so mobile browsers' rubber-band
+  // overscroll shows a continuation of the band above/below them,
+  // rather than flashing white past the top or bottom of the page.
+  background: $color-band-bg;
+}
+
+body {
+  margin: 0;
+  background: $color-bg;
+  color: $color-text;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  line-height: 1.6;
+}
+
+// Visually hidden but available to assistive tech.
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: $color-accent;
+  color: #fff;
+  border-radius: 0 0 $radius $radius;
+  transition: top 0.15s ease-in-out;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+a {
+  color: $color-link;
+
+  &:visited {
+    color: $color-link-visited;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid $color-accent;
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Shared horizontal bounds, so the header brand, main content and callouts
+// all line up on the same left/right edges.
+.container {
+  max-width: $max-width-page;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+// Header
+
+.site-header {
+  background: $color-band-bg;
+  border-bottom: 1px solid $color-border;
+}
+
+.site-header__inner {
+  padding-top: 1.75rem;
+  padding-bottom: 1.25rem;
+}
+
+.site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  color: $color-text;
+  text-decoration: none;
+
+  &:visited {
+    color: $color-text;
+  }
+}
+
+.site-header__logo {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  filter: brightness(1.2) saturate(0.85);
+}
+
+.site-header__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header__title {
+  font-size: 1.375rem;
+  font-weight: 700;
+}
+
+.site-header__tagline {
+  font-size: 0.95rem;
+  color: $color-text-muted;
+}
+
+// Main content
+
+main {
+  display: block;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.intro > :first-child {
+  margin-top: 0;
+}
+
+.intro img {
+  display: block;
+  margin: 0 0 1.5rem;
+}
+
+// More room between the intro paragraph and the screenshot below it.
+.intro .screenshot {
+  margin-top: 2rem;
+}
+
+// Callout cards
+
+.callouts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+// Note linking to the ODI open call and the application
+
+.application {
+  margin-top: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.application__title {
+  margin-top: 0;
+}
+
+@media (width >= 48rem) {
+  .callouts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // "Satchel: adding Solid storage to Scratch" is the third card; stretch
+  // it across both columns so it forms its own full-width row between the
+  // two pairs either side.
+  .callout:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+.callout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: $color-surface;
+  border: 2px solid $color-border;
+  border-radius: $radius;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
+}
+
+.callout__icon {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  height: 3.5rem;
+
+  img {
+    height: 100%;
+    width: auto;
+  }
+}
+
+.callout__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.callout__summary {
+  margin: 0 0 1rem;
+  color: $color-text-muted;
+}
+
+// Optional rich body (markdown) for a callout, used by the Satchel card:
+// a short feature list between the summary and the link.
+.callout__content {
+  margin: 0 0 1rem;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  ul {
+    padding-left: 1.25rem;
+    margin: 0.5rem 0 1rem;
+  }
+
+  li + li {
+    margin-top: 0.4rem;
+  }
+}
+
+.callout__link {
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+// Detail pages
+
+.word-count {
+  color: $color-text-muted;
+  font-size: 0.9rem;
+}
+
+// Set by word-count.js when an answer is over its limit.
+.word-count--over {
+  color: #a4201a;
+  font-weight: 700;
+}
+
+// Answers on the application page: shaded boxes, so it's clear which text
+// is the application itself.
+.page__content blockquote {
+  margin: 0.75rem 0 1.5rem;
+  padding: 0.25rem 1.25rem;
+  background: $color-band-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+}
+
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.page__title {
+  margin-top: 0;
+}
+
+.page__content {
+  img {
+    display: block;
+    margin: 1.5rem 0;
+  }
+
+  .logo {
+    max-width: 10rem;
+  }
+
+  table {
+    width: 100%;
+    margin: 1.5rem 0;
+    border-collapse: collapse;
+    background: $color-surface;
+  }
+
+  th,
+  td {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid $color-border;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: $color-band-bg;
+  }
+
+  // The first column holds short labels (like licence names) that read
+  // badly broken across lines.
+  td:first-child {
+    white-space: nowrap;
+  }
+
+  // scratchblocks replaces the contents of `pre.blocks` with an inline SVG;
+  // centering the (block-level) `<pre>` centers that SVG within it.
+  pre.blocks {
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+}
+
+// The "What's being built" list on what-is-satchel: five cards, each with
+// its own muted tint and a numbered badge, rather than a plain ordered
+// list - this is the section doing the most argumentative work on the
+// site, so it earns more visual attention than a bulleted paragraph.
+.built-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1.75rem 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: built;
+}
+
+.built-list li {
+  position: relative;
+  counter-increment: built;
+  padding: 1.1rem 1.1rem 1.1rem 3.25rem;
+  background: var(--built-tint);
+  border: 2px solid var(--built-accent);
+  border-radius: $radius;
+
+  &::before {
+    content: counter(built);
+    position: absolute;
+    top: 1.1rem;
+    left: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: var(--built-accent);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 50%;
+  }
+
+  strong {
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  &:nth-child(1) {
+    --built-tint: #e6edec;
+    --built-accent: #4f6d68;
+  }
+
+  &:nth-child(2) {
+    --built-tint: #f3e2c9;
+    --built-accent: #{$color-accent};
+  }
+
+  &:nth-child(3) {
+    --built-tint: #e6ecdb;
+    --built-accent: #5c7048;
+  }
+
+  &:nth-child(4) {
+    --built-tint: #ede0e2;
+    --built-accent: #7a4a5a;
+  }
+
+  &:nth-child(5) {
+    --built-tint: #e3e5e8;
+    --built-accent: #495364;
+  }
+}
+
+// Shared by the screenshot on the home page and the one on
+// what-is-scratch: a bordered, rounded frame around a `<figure>` whose
+// `<img>` is wrapped in a link to the full-size image, with a caption
+// below it. Centering it is only visible on the home page - on
+// what-is-scratch its max-width already matches its container's.
+// Overrides the more general `.intro img` / `.page__content img` rules
+// above, so it must stay after both in source order.
+.screenshot {
+  overflow: hidden;
+  max-width: 44rem;
+  margin: 0 auto 2.25rem;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+
+  > a {
+    display: block;
+    line-height: 0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  figcaption {
+    // Percentage (not a fixed rem) so the pull-up scales with the image's
+    // own rendered width - the mockups have a baked-in drop shadow at the
+    // bottom that's a fixed proportion of their width, not a fixed number
+    // of pixels. A fixed rem value looked fine at desktop widths but ate
+    // into the actual screenshot content once the image (and so the
+    // shadow) shrank on narrow/mobile viewports.
+    margin-top: -4.5%;
+
+    // Extra left padding (as a percentage, so it scales with the image
+    // like margin-top above) lines the caption up with the screenshot
+    // inside the image, not with the image's own edge - the mockups have
+    // a drop shadow baked in that pads their left side more than the
+    // right.
+    padding: 0.85rem 1.25rem 1rem 4%;
+    color: $color-text-muted;
+    font-size: 0.8rem;
+    text-align: left;
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
+.page__back {
+  font-size: 0.95rem;
+}
+
+.page__content + .page__back {
+  margin-top: 2.5rem;
+}
+
+// Contact form
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  max-width: 28rem;
+
+  // `display: flex` above otherwise beats the browser default that hides
+  // a [hidden] element, since both have equal specificity.
+  &[hidden] {
+    display: none;
+  }
+}
+
+.contact-success,
+.contact-error {
+  max-width: 28rem;
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  border-radius: $radius;
+  border: 2px solid;
+}
+
+.contact-success {
+  color: #2f4f2f;
+  background: #eaf3ea;
+  border-color: #b9d6b9;
+}
+
+.contact-error {
+  color: #6b1f1f;
+  background: #f7e9e9;
+  border-color: #e3b8b8;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field label {
+  font-weight: 600;
+}
+
+.form-field input,
+.form-field textarea {
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  color: $color-text;
+  background: $color-surface;
+  border: 2px solid $color-border;
+  border-radius: 0.5rem;
+}
+
+.button {
+  align-self: flex-start;
+  padding: 0.65rem 1.5rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: $color-accent;
+  border: 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-link;
+  }
+}
+
+// Footer
+
+.site-footer {
+  background: $color-band-bg;
+  border-top: 1px solid $color-border;
+  padding: 1.5rem;
+  color: $color-text-muted;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.footer-link__icon {
+  width: 1.1em;
+  height: 1.1em;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// Diagrams: set up by diagram-modal.js, which opens each one full size in
+// a dialog, since many are too small to read at the page's width.
+
+.mermaid--expandable {
+  cursor: zoom-in;
+}
+
+// The dialog's height fits the diagram, up to $diagram-modal-max-height;
+// the browser centres a modal dialog vertically.
+$diagram-modal-max-height: 95dvh;
+$diagram-modal-bar-height: 4.5rem;
+$diagram-modal-padding: 1rem;
+$diagram-modal-chrome: $diagram-modal-bar-height + 2 * $diagram-modal-padding;
+
+.diagram-modal {
+  width: 95vw;
+  max-width: none;
+  max-height: $diagram-modal-max-height;
+  padding: 0;
+  overflow: hidden;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+
+  &::backdrop {
+    background: rgb(36 26 16 / 70%);
+  }
+}
+
+.diagram-modal__bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: $diagram-modal-bar-height;
+  padding: 0 0.75rem;
+  border-bottom: 1px solid $color-border;
+}
+
+// .button pins itself to the top (for forms); centre it in the bar instead.
+.diagram-modal__close {
+  align-self: center;
+}
+
+.diagram-modal__body {
+  padding: $diagram-modal-padding;
+
+  // Scale the diagram to fit both the width and the height available; the
+  // svg's viewBox keeps its proportions, centred in any spare space.
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: calc(#{$diagram-modal-max-height} - #{$diagram-modal-chrome} - 2px);
+
+    // Mermaid sets the diagram's natural width inline; let it grow to fit.
+    max-width: none !important;
+  }
+}
