@@ -1,0 +1,60 @@
+- id: scratch
+  title: What is Scratch?
+  summary: >-
+    Scratch is the free, block-based coding tool millions of children use to
+    make games and animations — but a project saved there lives only inside
+    whichever club, school or platform's account created it.
+  url: /what-is-scratch/
+  icon: /assets/images/scratch-logo.svg
+  icon_alt: The Scratch logo
+
+- id: solid
+  title: What is Solid?
+  summary: >-
+    Solid is an open web standard for personal data storage: instead of
+    every app holding its own copy of your data, you keep it in a personal
+    online datastore called a Pod that you control.
+  url: /what-is-solid/
+  icon: /assets/images/solid-logo.svg
+  icon_alt: The Solid logo
+
+- id: prototype
+  title: "Satchel: adding Solid storage to Scratch"
+  summary: >-
+    A prototype Scratch editor that saves a child's projects to their own
+    Solid Pod, plus a sharing dashboard where the child and their guardian
+    decide together who else can see them. It aims to show that children's
+    work can be portable, and shared on the family's terms rather than a
+    platform's.
+  body: |
+    **Key features**
+
+    - **Portability.** Projects live in the child's own Pod, so they outlive
+      any one club, school or platform account.
+    - **Shared decisions.** A share only happens when both the child and
+      their guardian agree, and either can take it back at any time.
+    - **Fine-grained sharing.** Show a project to your Code Club without
+      making it public to the world.
+    - **Nothing held centrally.** The only service Satchel runs holds none
+      of the children's work and no passwords, and a family can swap it for
+      one run by someone else.
+  url: /what-is-satchel/
+  icon: /assets/images/satchel-logo.svg
+  icon_alt: The Satchel logo
+
+- id: beyond-scratch
+  title: "Beyond Scratch: a general principle"
+  summary: >-
+    Scratch is the concrete tool, but the underlying pattern — a child's
+    own, portable store of their learning work, controlled by them and
+    their family — is meant to generalise to any tool that produces a
+    child's learning data.
+  url: /beyond-scratch/
+
+- id: prior-attempts
+  title: How this differs from previous attempts
+  summary: >-
+    Earlier attempts at learner-record systems, like inBloom, foundered
+    because a single organisation held the data centrally. Solid never
+    puts a child's data in one company's database in the first place.
+  url: /how-this-differs/

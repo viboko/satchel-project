@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<div class="home">
+  <div class="intro">
+    {{ content }}
+  </div>
+
+  <div class="callouts">
+    {% for section in site.data.sections %}
+      {% include callout.html section=section %}
+    {% endfor %}
+  </div>
+
+  <div class="application">
+    <h2 class="application__title">Why this exists</h2>
+    <p>
+      Satchel is a proposal in response to the Open Data Institute's
+      <a href="https://theodi.org/news-and-events/blog/solid-open-call/" target="_blank" rel="noopener">Solid use case open call</a>,
+      which offers in-kind support to non-commercial projects using Solid for
+      social good.
+    </p>
+    <a class="callout__link" href="{{ '/application/' | relative_url }}">
+      Read the application <span aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</div>

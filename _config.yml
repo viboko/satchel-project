@@ -1,0 +1,34 @@
+title: Satchel
+tagline: Solid storage for Scratch
+description: >-
+  A prototype that lets a child's Scratch projects be saved to their own
+  personal Solid Pod, with sharing decided by the child and their guardian
+  together instead of Scratch's all-or-nothing switch.
+url: "https://satchel.viboko.dev"
+author:
+  name: Matthew Hasler
+
+# Used as the link-preview (Open Graph) image for every page.
+og_image: /assets/favicon/android-chrome-512x512.png
+og_image_alt: The Satchel logo, a leather satchel bag
+
+contact:
+  formspree_endpoint: "https://formspree.io/f/xwlpoanp"
+
+plugins:
+  - jekyll-sitemap
+
+markdown: kramdown
+
+# Silences Sass deprecation warnings from third-party @use/@import chains.
+sass:
+  quiet_deps: true
+
+# Repo tooling that shouldn't be published as part of the site.
+exclude:
+  - README.md
+  - justfile
+  - package.json
+  - package-lock.json
+  - eslint.config.js
+  - osv-scanner.toml

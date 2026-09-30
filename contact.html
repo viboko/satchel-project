@@ -1,0 +1,32 @@
+---
+layout: page
+title: Contact
+description: Get in touch about the Satchel project.
+permalink: /contact/
+---
+
+<p id="contact-intro">Have a question about Satchel, or want to get in touch? Send a message below.</p>
+
+<p id="contact-success" class="contact-success" role="status" hidden>Thanks — your message has been sent.</p>
+
+<form id="contact-form" class="contact-form" action="{{ site.contact.formspree_endpoint }}" method="POST">
+  <!-- No-JS fallback: Formspree redirects here instead of its own page if
+       the fetch-based submission below doesn't run. -->
+  <input type="hidden" name="_next" value="{{ '/contact/' | absolute_url }}">
+
+  <div class="form-field">
+    <label for="email">Your email address</label>
+    <input type="email" id="email" name="email" autocomplete="email" required>
+  </div>
+
+  <div class="form-field">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="6" required></textarea>
+  </div>
+
+  <p id="contact-error" class="contact-error" role="alert" hidden>Something went wrong sending your message — please try again in a moment.</p>
+
+  <button type="submit" class="button">Send message</button>
+</form>
+
+<script src="{{ '/assets/js/contact-form.js' | relative_url }}"></script>
