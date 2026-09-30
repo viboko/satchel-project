@@ -36,12 +36,6 @@ Satchel is a proposal in response to the Open Data Institute's [Solid use case o
 > {: .word-count}
 {: data-word-limit="100"}
 
-**Please confirm that your project supports "social good".**
-
-> Yes. The problem is that children's coding work is currently locked inside whichever platform or club administers the tool they used, with no portable, self-owned record.
->
-> Satchel's Solid-based approach gives children and their families ownership of that record instead of a platform or vendor, and the value (a portable, family-controlled record; a working demonstration of two-party, revocable consent for children's data) accrues to the families and to the wider Solid/education ecosystem, not to me or any private company. I have no commercial plans for this project.
-
 **Please share a brief description of your project.**
 
 What is your project, who is it for, what problem are you aiming to solve, and how does Solid fit into the solution?
@@ -73,15 +67,17 @@ What is your project, who is it for, what problem are you aiming to solve, and h
 
 **What are the intended impacts of your project, and how do you intend to measure them?**
 
-> **Primary impact**: showing that children's coding work can be stored under child-and-family control rather than a platform's, with a reusable core package and consent vocabulary for other education tools.
+> **Primary impact**: showing children's coding work can live under child-and-family control, not a platform's, with a reusable core package and consent vocabulary for other education tools.
 >
-> **Secondary impact**: documenting where Solid does and doesn't yet support children's data governance (two-party approval, expiring grants, replaceable helper services), to inform the Solid community.
+> **Secondary impact**: documenting where Solid does and doesn't yet support children's data governance (two-party approval, expiring grants, replaceable helper services).
 >
-> I'll measure success by:
+> **Who benefits**: families and the Solid and education communities, not me or any company; I have no commercial plans for Satchel.
 >
-> 1. the must-have use cases working end to end on ODI-hosted Pods;
+> Success measures:
+>
+> 1. must-have use cases working end to end on ODI-hosted Pods;
 > 1. a non-technical parent granting and revoking unaided;
-> 1. qualitative feedback from club leaders and parents;
+> 1. feedback from club leaders and parents;
 > 1. the packages, vocabulary and findings published openly.
 >
 > (max 100 words)
