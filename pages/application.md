@@ -73,9 +73,9 @@ What is your project, who is it for, what problem are you aiming to solve, and h
 >
 > **Who benefits**: families and the Solid and education communities, not me or any company; I have no commercial plans for Satchel.
 >
-> I'll measure success by:
+> Success measures:
 >
-> 1. must-have use cases working end-to-end on ODI-hosted Pods;
+> 1. must-have use cases working end to end on ODI-hosted Pods;
 > 1. a non-technical parent granting and revoking unaided;
 > 1. feedback from club leaders and parents;
 > 1. the packages, vocabulary and findings published openly.
