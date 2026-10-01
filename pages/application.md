@@ -117,8 +117,5 @@ What is your project, who is it for, what problem are you aiming to solve, and h
 >
 > **Open-Source (OS)**: guidance on publishing Satchel in a way that provides maximum benefit to the Solid community.
 
-**Please provide a link to your website, if available.**
-> [satchel.viboko.dev](https://satchel.viboko.dev){:target="_blank" rel="noopener"}
-
 <!-- markdownlint-disable-next-line MD033 -->
 <script src="{{ '/assets/js/word-count.js' | relative_url }}"></script>
