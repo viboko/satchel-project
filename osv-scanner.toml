@@ -29,3 +29,28 @@ reason = "Dev-only transitive dependency of @lhci/cli; no fix available without 
 id = "GHSA-w5hq-g745-h8pq" # uuid, via @lhci/cli -> lighthouse -> puppeteer-core
 ignoreUntil = 2027-01-05
 reason = "Dev-only transitive dependency of @lhci/cli; no fix available without a breaking downgrade"
+
+# The vulnerabilities below are also in transitive, dev-only tooling
+# dependencies (linters and Lighthouse CI), never shipped in the built site.
+# Each either has no fixed release yet or is only fixed in a version outside
+# the range its parent package accepts - revisit before the dates below.
+
+[[IgnoredVulns]]
+id = "GHSA-c475-qrg2-pj4r" # basic-ftp, via @lhci/cli -> proxy-agent -> get-uri
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of @lhci/cli; fix is in basic-ftp 6, outside get-uri's ^5 range"
+
+[[IgnoredVulns]]
+id = "GHSA-hp3w-g68c-fv3c" # sprintf-js, via @lhci/cli -> @lhci/utils -> js-yaml -> argparse
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of @lhci/cli; no fixed sprintf-js release yet"
+
+[[IgnoredVulns]]
+id = "GHSA-vfj7-8cjw-p6xm" # braces, via stylelint -> micromatch
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of stylelint; no fixed braces release yet"
+
+[[IgnoredVulns]]
+id = "GHSA-238p-pmpm-9mq7" # katex, via markdownlint-cli -> markdownlint -> micromark-extension-math
+ignoreUntil = 2027-01-05
+reason = "Dev-only transitive dependency of markdownlint-cli (math syntax only, KaTeX never renders); fix is in katex 0.18, outside micromark-extension-math's ^0.16 range"
