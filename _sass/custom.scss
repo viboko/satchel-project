@@ -497,10 +497,30 @@ $code-number: #7a6a5c;
   border-radius: $radius;
 }
 
+$code-gutter-width: 3.25rem;
+$code-gutter-padding: 0.75rem;
+
+// Where the gutter's 1px border starts. Pseudo-elements aren't matched by
+// `*`, so the line numbers' box is content-box: padding and border add to
+// its width.
+$code-gutter-edge: $code-gutter-width + $code-gutter-padding;
+
 .code-snippet__code {
   overflow-x: auto;
   margin: 0;
   padding: 0.6rem 0;
+
+  // Continues the gutter, and its border, through the padding above the
+  // first line and below the last. The box's background doesn't scroll, so
+  // it stays in line with the sticky line numbers.
+  background:
+    linear-gradient(
+      to right,
+      $code-gutter-bg $code-gutter-edge,
+      $color-border $code-gutter-edge,
+      $color-border calc(#{$code-gutter-edge} + 1px),
+      transparent calc(#{$code-gutter-edge} + 1px)
+    );
   font-size: 0.85rem;
   line-height: 1.55;
 
@@ -524,9 +544,9 @@ $code-number: #7a6a5c;
     position: sticky;
     left: 0;
     display: inline-block;
-    width: 3.25rem;
+    width: $code-gutter-width;
     margin-right: 1rem;
-    padding-right: 0.75rem;
+    padding-right: $code-gutter-padding;
     background: $code-gutter-bg;
     border-right: 1px solid $color-border;
     color: $code-number;
