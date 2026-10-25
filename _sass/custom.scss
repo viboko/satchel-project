@@ -467,6 +467,12 @@ main {
   margin-top: 2.5rem;
 }
 
+// Posts carry code and video, so they use the full width of the header,
+// like the home page, rather than the narrower column of the other pages.
+.post {
+  max-width: none;
+}
+
 // Posts: the date and author under the title.
 .post__meta {
   margin: -0.5rem 0 1.5rem;
