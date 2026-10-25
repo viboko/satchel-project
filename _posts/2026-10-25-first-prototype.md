@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Progress update: saving a Scratch project to a Solid Pod"
+title: "Satchel: Initial investigations"
 description: >-
   Where Satchel stands in October 2026: a first working prototype that saves
   a Scratch project to a Solid Pod, how it's built, what it doesn't do yet,
@@ -20,18 +20,6 @@ code_source:
 <!-- Code snippets and the video, diagram and transcript are HTML, or look
      like it to markdownlint. -->
 <!-- markdownlint-disable MD033 -->
-
-This is an update on Satchel ahead of my technical interview with the ODI
-this week. It covers where the project stands, the first piece of working
-code, a recorded demo of it, what that demo leaves out, what comes next, and
-where I think the ODI's support would make the most difference.
-
-Jump to: [Where things stand](#status) &middot;
-[How the editor is built](#how-its-built) &middot;
-[The demo](#demo) &middot;
-[What the demo doesn't do yet](#gaps) &middot;
-[Next steps](#next-steps) &middot;
-[How the ODI could help](#odi)
 
 ## Where things stand {#status}
 
@@ -337,12 +325,12 @@ This is a first slice, and it's worth being plain about what's missing.
 - **No loading.** Projects can be saved to a Pod but not opened from one.
   There's no "Open from your Pod" yet, so the only way to see a saved project
   is with another Solid app, as in the demo.
-- **Only the project's code is saved, not its costumes and sounds.** The
-  editor writes Scratch's project JSON, which refers to costumes and sounds
-  by their hash rather than including them. The complete `.sb3` file is only
-  kept briefly in the browser, to survive the login redirect. Saving the full
-  `.sb3`, and the description and thumbnail that go with it, is part of the
-  load work.
+- **The video and code above save only the project's code.** They write
+  Scratch's project JSON, which refers to costumes and sounds by their hash
+  rather than including them. Since recording, I've changed the save to write
+  the complete `.sb3` file instead, costumes and sounds included, so a saved
+  project now has everything needed to open it again. The description and
+  thumbnail that should sit alongside it aren't written yet.
 - **The Solid code lives inside the Scratch fork.** The plan is for
   everything that isn't Scratch-specific (where things go in a Pod, saving
   and loading, and later the sharing rules) to live in a separate core
@@ -370,9 +358,9 @@ In roughly this order, fitting the
    an MIT-licensed core package that knows about Pods but not Scratch, and a
    thin Scratch adapter in the fork. Doing this before adding more features
    keeps the licence boundary honest from the start.
-2. **Load from a Pod, and save the whole project.** Save complete `.sb3`
-   files, each in its own folder with a description and thumbnail, and add
-   "Open from your Pod". This finishes the first must-have.
+2. **Load from a Pod.** Give each saved `.sb3` its own folder, with a
+   description and thumbnail, and add "Open from your Pod". This finishes the
+   first must-have.
 3. **Test against the ODI's servers.** Run the same flow on ODI-hosted Pods,
    on both servers, and find out early what differs.
 4. **Publish a Client ID Document** for the editor, so providers can show
