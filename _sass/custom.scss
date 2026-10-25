@@ -467,6 +467,106 @@ main {
   margin-top: 2.5rem;
 }
 
+// Posts: the date and author under the title.
+.post__meta {
+  margin: -0.5rem 0 1.5rem;
+  color: $color-text-muted;
+  font-size: 0.95rem;
+}
+
+// Code in posts. Fenced blocks are highlighted by Rouge, which marks up
+// tokens with short class names; only the few that matter are coloured,
+// each dark enough for AA contrast on the white background.
+.page__content {
+  code {
+    padding: 0.1em 0.3em;
+    background: $color-band-bg;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+  }
+
+  pre.highlight {
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+    padding: 1rem 1.25rem;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius;
+    font-size: 0.85rem;
+    line-height: 1.5;
+
+    code {
+      padding: 0;
+      background: none;
+      font-size: inherit;
+    }
+  }
+
+  .highlight {
+    .c,
+    .c1,
+    .cm {
+      color: $color-text-muted;
+      font-style: italic;
+    }
+
+    .k,
+    .kd,
+    .kr,
+    .kt,
+    .kc {
+      color: $color-accent;
+    }
+
+    .s,
+    .s1,
+    .s2,
+    .sb,
+    .si {
+      color: #2f6b3a;
+    }
+
+    .mi,
+    .nt {
+      color: #1f5a8a;
+    }
+  }
+}
+
+// A captioned video, framed like `.screenshot`.
+.video {
+  overflow: hidden;
+  margin: 1.5rem 0 2rem;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  background: $color-surface;
+
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    padding: 0.75rem 1.25rem;
+    color: $color-text-muted;
+    font-size: 0.8rem;
+  }
+}
+
+.transcript {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  background: $color-band-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+}
+
 // Contact form
 
 .contact-form {
