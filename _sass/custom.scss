@@ -507,6 +507,12 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
 
 .code-snippet__code {
   overflow-x: auto;
+
+  // Without this, a trackpad's elastic overscroll past either side slides
+  // the lines (and their sticky numbers) away from the gutter background
+  // below, which stays put. It also stops a sideways swipe in the code
+  // from going back a page.
+  overscroll-behavior-x: none;
   margin: 0;
   padding: 0.6rem 0;
 
