@@ -10,7 +10,16 @@ permalink: /updates/2026-10-25-first-prototype/
 # site, left out of the sitemap, and asking search engines not to index it.
 noindex: true
 sitemap: false
+# Where the code snippets are quoted from: a pushed commit on the fork's
+# satchel-demo branch, so their line numbers and links stay accurate.
+code_source:
+  repo: viboko/scratch-editor
+  ref: 5f27c5d53cbc8f7775c21634718d641ebaa5115a
 ---
+
+<!-- Code snippets and the video, diagram and transcript are HTML, or look
+     like it to markdownlint. -->
+<!-- markdownlint-disable MD033 -->
 
 This is an update on Satchel ahead of my technical interview with the ODI
 this week. It covers where the project stands, the first piece of working
@@ -68,7 +77,7 @@ fork, the easier it is to keep up with Scratch.
 Solid saving is switched on with a single new prop, `canSaveToSolid`. Without
 it, the editor behaves exactly as before. The demo page turns it on:
 
-```jsx
+{% code_snippet lang="jsx" path="packages/scratch-gui/src/playground/solid-save-demo.jsx" start=23 %}
 root.render(
     <WrappedGui
         canEditTitle
@@ -76,15 +85,15 @@ root.render(
         onClickLogo={onClickLogo}
     />
 );
-```
+{% endcode_snippet %}
 
 With the prop set, File > Save now (and Ctrl/Cmd+S) opens a "Save to your
 Solid Pod" dialog instead of saving to Scratch's servers. That's a one-line
 change in the menu bar:
 
-```jsx
-onClickSave: () => dispatch(ownProps.canSaveToSolid ? openSolidSaveModal() : manualUpdateProject()),
-```
+{% code_snippet lang="jsx" path="packages/scratch-gui/src/components/menu-bar/menu-bar.jsx" start=779 %}
+    onClickSave: () => dispatch(ownProps.canSaveToSolid ? openSolidSaveModal() : manualUpdateProject()),
+{% endcode_snippet %}
 
 The rest is three new files: [`solid-save.ts`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/lib/solid-save.ts){:target="_blank" rel="noopener"},
 which talks to Solid; [`solid-pending-save.ts`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/lib/solid-pending-save.ts){:target="_blank" rel="noopener"},
@@ -103,7 +112,6 @@ redirects the whole page to the user's Solid provider and back. Anything only
 held in memory, like the project the child is working on, is lost on the
 way. So a first save spans two page loads:
 
-<!-- markdownlint-disable MD033 -->
 <div class="mermaid">
 sequenceDiagram
     accTitle: Saving to a Solid Pod for the first time
@@ -125,13 +133,12 @@ sequenceDiagram
     Editor->>Pod: Write scratch/satchel.json
     Editor-->>Child: "Saved", project back in the editor
 </div>
-<!-- markdownlint-enable MD033 -->
 
 Before redirecting, the editor finds the user's login provider from their
 WebID profile and stashes the project, both as the JSON that gets saved and
 as a complete `.sb3` file so it can be put back into the editor afterwards:
 
-```ts
+{% code_snippet lang="ts" path="packages/scratch-gui/src/lib/solid-save.ts" start=145 %}
 export const startSolidSave = async ({webId, title, projectJson, projectSb3, isRenewal = false}: {
     webId: string;
     title: string;
@@ -147,12 +154,12 @@ export const startSolidSave = async ({webId, title, projectJson, projectSb3, isR
         clientName: 'Scratch'
     });
 };
-```
+{% endcode_snippet %}
 
 When the page loads again, the editor checks whether it's coming back from a
 login, and if a save was waiting, finishes it:
 
-```ts
+{% code_snippet lang="ts" path="packages/scratch-gui/src/lib/solid-save.ts" start=166 %}
 export const completePendingSolidSave = async (): Promise<CompletedSolidSave | null> => {
     const returningFromLogin = new URLSearchParams(window.location.search).has('state');
     // Restoring the previous session is what lets later saves skip the login.
@@ -161,9 +168,27 @@ export const completePendingSolidSave = async (): Promise<CompletedSolidSave | n
 
     const pending = await takePendingSolidSave();
     if (!pending) return null;
-    // ...writes the project, and returns it so the editor can restore it
+
+    const {webId, isRenewal, title, projectJson, projectSb3} = pending;
+    if (!sessionInfo?.isLoggedIn) {
+        return {
+            outcome: {status: 'error', message: 'The Solid login was not completed.'},
+            isRenewal,
+            title,
+            projectSb3
+        };
+    }
+    rememberWebId(webId);
+
+    try {
+        const url = await writeProject(webId, title, projectJson);
+        return {outcome: {status: 'saved', url}, isRenewal, title, projectSb3};
+    } catch (error) {
+        log.error(`completePendingSolidSave: failed to write the project for ${webId}`, error);
+        return {outcome: {status: 'error', message: errorMessage(error)}, isRenewal, title, projectSb3};
+    }
 };
-```
+{% endcode_snippet %}
 
 ### Writing to the Pod
 
@@ -171,7 +196,7 @@ The write itself is short. It finds the user's Pod from their profile,
 makes a `scratch/` folder in it if there isn't one, and writes the project
 there, named after its title:
 
-```ts
+{% code_snippet lang="ts" path="packages/scratch-gui/src/lib/solid-save.ts" start=77 %}
 const writeProject = async (webId: string, title: string, projectJson: string): Promise<string> => {
     const {fetch} = getDefaultSession();
     const [podUrl] = await getPodUrlAll(webId, {fetch});
@@ -188,7 +213,7 @@ const writeProject = async (webId: string, title: string, projectJson: string): 
     });
     return fileUrl;
 };
-```
+{% endcode_snippet %}
 
 The `fetch` here comes from the Solid session, and adds the user's token to
 each request. The Pod server, not Scratch, decides whether the write is
@@ -206,19 +231,19 @@ doesn't have one. So when a save finds no session, or the Pod rejects the
 token with an HTTP 401, the editor logs in again by itself, using the WebID
 from the last successful login, rather than showing the dialog again:
 
-```ts
-saveToSolidPod({title: projectTitle, projectJson})
-    .then(() => {
-        onShowSaved();
-        onClose();
-    })
-    .catch(error => {
-        if (error instanceof SolidSessionExpiredError && getLastSolidWebId() !== '') {
-            return logInAgain().catch(showFailure);
-        }
-        return showFailure(error);
-    });
-```
+{% code_snippet lang="jsx" path="packages/scratch-gui/src/containers/solid-save-modal.jsx" start=124 %}
+        saveToSolidPod({title: projectTitle, projectJson})
+            .then(() => {
+                onShowSaved();
+                onClose();
+            })
+            .catch(error => {
+                if (error instanceof SolidSessionExpiredError && getLastSolidWebId() !== '') {
+                    return logInAgain().catch(showFailure);
+                }
+                return showFailure(error);
+            });
+{% endcode_snippet %}
 
 The dialog only appears for someone who has never logged in, or when a save
 genuinely fails.
@@ -241,7 +266,6 @@ genuinely fails.
 
 ## The demo {#demo}
 
-<!-- markdownlint-disable MD033 -->
 <figure class="video">
   <video controls preload="metadata" width="1280" height="800"
          poster="{{ '/assets/videos/2026-10-25-save-to-pod-demo-poster.webp' | relative_url }}">
@@ -253,7 +277,6 @@ genuinely fails.
     different Solid app. 1 minute 23 seconds, narrated, with on-screen captions.
   </figcaption>
 </figure>
-<!-- markdownlint-enable MD033 -->
 
 What happens in the video:
 
@@ -283,7 +306,6 @@ That last step is the point of the whole project in miniature. The work
 belongs to the person who made it, in storage they control, rather than to
 the app they made it in.
 
-<!-- markdownlint-disable MD033 -->
 <details class="transcript" markdown="1">
 <summary>Read the narration</summary>
 
@@ -307,7 +329,6 @@ folder… and there's the project that Scratch saved. There it is: the very
 same project, read back from the Pod, by a completely different app.
 
 </details>
-<!-- markdownlint-enable MD033 -->
 
 ## What the demo doesn't do yet {#gaps}
 

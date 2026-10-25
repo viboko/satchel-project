@@ -474,62 +474,168 @@ main {
   font-size: 0.95rem;
 }
 
-// Code in posts. Fenced blocks are highlighted by Rouge, which marks up
-// tokens with short class names; only the few that matter are coloured,
-// each dark enough for AA contrast on the white background.
-.page__content {
-  code {
-    padding: 0.1em 0.3em;
-    background: $color-band-bg;
-    border-radius: 0.25rem;
-    font-size: 0.9em;
+// Inline code in posts.
+.page__content code {
+  padding: 0.1em 0.3em;
+  background: $color-band-bg;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
+
+// Code snippets, rendered by _plugins/code_snippet.rb: one element per line
+// carrying its line number in the source file, shown in a gutter on the
+// left, and a bar underneath linking to those lines on GitHub.
+$code-gutter-bg: #faf6f0;
+$code-hover-bg: #f3ebdd;
+$code-number: #7a6a5c;
+
+.code-snippet {
+  overflow: hidden;
+  margin: 1rem 0 1.75rem;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+}
+
+.code-snippet__code {
+  overflow-x: auto;
+  margin: 0;
+  padding: 0.6rem 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+
+  > code {
+    display: inline-block;
+    min-width: 100%;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    font-size: inherit;
+  }
+}
+
+.code-snippet__line {
+  display: block;
+  padding-right: 1.25rem;
+
+  // The number is generated content, so copying the code leaves it out.
+  &::before {
+    content: attr(data-line);
+    position: sticky;
+    left: 0;
+    display: inline-block;
+    width: 3.25rem;
+    margin-right: 1rem;
+    padding-right: 0.75rem;
+    background: $code-gutter-bg;
+    border-right: 1px solid $color-border;
+    color: $code-number;
+    text-align: right;
+    user-select: none;
   }
 
-  pre.highlight {
-    overflow-x: auto;
-    margin: 1rem 0 1.5rem;
-    padding: 1rem 1.25rem;
-    background: $color-surface;
-    border: 1px solid $color-border;
-    border-radius: $radius;
-    font-size: 0.85rem;
-    line-height: 1.5;
+  &:hover {
+    background: $code-hover-bg;
 
-    code {
-      padding: 0;
-      background: none;
-      font-size: inherit;
+    &::before {
+      background: $color-band-bg;
+      color: $color-text;
+      font-weight: 600;
     }
   }
+}
 
-  .highlight {
-    .c,
-    .c1,
-    .cm {
-      color: $color-text-muted;
-      font-style: italic;
-    }
+.code-snippet__source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: $color-band-bg;
+  border-top: 1px solid $color-border;
+  font-size: 0.8rem;
 
-    .k,
-    .kd,
-    .kr,
-    .kt,
-    .kc {
-      color: $color-accent;
-    }
+  a {
+    white-space: nowrap;
+  }
+}
 
-    .s,
-    .s1,
-    .s2,
-    .sb,
-    .si {
-      color: #2f6b3a;
-    }
+.code-snippet__path {
+  overflow-wrap: anywhere;
+  color: $color-text-muted;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
 
-    .mi,
-    .nt {
-      color: #1f5a8a;
-    }
+// Rouge's token classes. Each colour has at least AA contrast on both the
+// white background and the hover background.
+.code-snippet__code {
+  // Comments
+  .c,
+  .c1,
+  .cm,
+  .cs {
+    color: $color-text-muted;
+    font-style: italic;
+  }
+
+  // Keywords and operators
+  .k,
+  .kd,
+  .kn,
+  .kp,
+  .kr,
+  .kv,
+  .o,
+  .ow {
+    color: #a8321c;
+  }
+
+  // Constants and numbers
+  .kc,
+  .m,
+  .mf,
+  .mi,
+  .no,
+  .bp {
+    color: #1f5a8a;
+  }
+
+  // Functions
+  .nf,
+  .fm {
+    color: #6b3fa0;
+  }
+
+  // Types, classes, built-ins and JSX components
+  .kt,
+  .nb,
+  .nc {
+    color: #0f6a6a;
+  }
+
+  // JSX attributes and object keys
+  .na,
+  .nl {
+    color: #8a5a00;
+  }
+
+  // Strings, including their delimiters
+  .s,
+  .s1,
+  .s2,
+  .sb,
+  .dl,
+  .sr {
+    color: #2f6b3a;
+  }
+
+  // ${…} inside a template string
+  .si {
+    color: #a8321c;
+  }
+
+  .p {
+    color: $color-text-muted;
   }
 }
 
