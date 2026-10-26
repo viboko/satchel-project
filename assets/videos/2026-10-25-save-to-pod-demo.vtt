@@ -1,0 +1,70 @@
+WEBVTT
+
+00:00:00.017 --> 00:00:04.017
+Let's demo how we could use Satchel, to save a Scratch project to a Solid Pod.
+
+00:00:06.128 --> 00:00:10.688
+Here's a brand new Solid server, running locally... First, let's sign up for an account.
+
+00:00:11.326 --> 00:00:14.366
+Now we create a Pod, and call it "my-pod".
+
+00:00:14.767 --> 00:00:18.167
+The Pod comes with a Web ID. That's our identity on the Solid web.
+
+00:00:20.838 --> 00:00:24.358
+Over to Scratch! This is the editor, with saving to Solid switched on.
+
+00:00:24.759 --> 00:00:26.999
+Let's load a project from the computer.
+
+00:00:27.401 --> 00:00:29.361
+Click the green flag to run it.
+
+00:00:34.915 --> 00:00:37.675
+Now we're going to save the project to our Pod.
+
+00:00:38.074 --> 00:00:41.634
+Scratch asks for our Web ID, so it knows where to log us in.
+
+00:00:42.718 --> 00:00:46.638
+The Solid server checks with us: is Scratch allowed to save here? Yes, it is.
+
+00:00:47.926 --> 00:00:51.366
+Saved! And we're straight back in the editor, right where we left off.
+
+00:00:57.050 --> 00:01:03.490
+The important thing is that now the project isn't locked inside Scratch. Any Solid app can reach it. Let's try a file manager.
+
+00:01:04.539 --> 00:01:08.259
+Same Web ID, same Pod. Let's authorize the file manager.
+
+00:01:09.005 --> 00:01:11.085
+Now let's browse the contents of the Pod.
+
+00:01:11.537 --> 00:01:13.777
+Then, we'll look inside the Scratch container.
+
+00:01:14.206 --> 00:01:16.486
+and there is the project that Scratch saved.
+
+00:01:16.959 --> 00:01:21.559
+The file manager doesn't know what an sb3 file is. But actually, it's just a zip.
+
+00:01:21.977 --> 00:01:24.097
+So let's download it from the Pod…
+
+00:01:25.450 --> 00:01:27.530
+and open it with an ordinary zip tool.
+
+00:01:28.084 --> 00:01:31.604
+Inside, there's the project, and every costume and sound it uses.
+
+00:01:32.253 --> 00:01:34.893
+The project file holds the scripts and the variables.
+
+00:01:35.364 --> 00:01:39.684
+And the costumes are just ordinary pictures. Here's our cat, holding the satchel.
+
+00:01:41.093 --> 00:01:45.573
+So the whole project lives in the user's own Pod, open to any app they choose.

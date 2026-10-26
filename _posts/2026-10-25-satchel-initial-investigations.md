@@ -10,11 +10,11 @@ permalink: /updates/2026-10-25-satchel-initial-investigations/
 # site, left out of the sitemap, and asking search engines not to index it.
 noindex: true
 sitemap: false
-# Where the code snippets are quoted from: a pushed commit on the fork's
-# satchel-demo branch, so their line numbers and links stay accurate.
+# Where the code snippets are quoted from: the fork's initial-investigations
+# tag, so their line numbers and links stay accurate.
 code_source:
   repo: viboko/scratch-editor
-  ref: 5f27c5d53cbc8f7775c21634718d641ebaa5115a
+  ref: initial-investigations
 ---
 
 <!-- Code snippets and the video, diagram and collapsed section are HTML, or look
@@ -27,6 +27,8 @@ code_source:
   <video controls preload="metadata" width="1280" height="800"
          poster="{{ '/assets/videos/2026-10-25-save-to-pod-demo-poster.webp' | versioned_url }}">
     <source src="{{ demo_video }}" type="video/mp4">
+    <track kind="captions" srclang="en" label="English"
+           src="{{ '/assets/videos/2026-10-25-save-to-pod-demo.vtt' | versioned_url }}">
   </video>
   <figcaption>
     <span>
@@ -60,14 +62,14 @@ anywhere the tools below do.
    brew install just
    ```
 
-2. **Clone the fork, on the `satchel-demo` branch, then install and build
-   it.** The `nvm install` line picks up the exact Node.js version from the
+2. **Clone the fork, at the `initial-investigations` tag, then install and
+   build it.** The `nvm install` line picks up the exact Node.js version from the
    fork's `.nvmrc`; leave it out if you don't use
    [nvm](https://github.com/nvm-sh/nvm){:target="_blank" rel="noopener"}. The
    build is only needed once, and takes a few minutes.
 
    ```bash
-   git clone --branch satchel-demo https://github.com/viboko/scratch-editor.git
+   git clone --branch initial-investigations https://github.com/viboko/scratch-editor.git
    cd scratch-editor
    nvm install
    just install
@@ -144,13 +146,16 @@ into it regularly so the fork doesn't drift. All the changes are in the
 fork, the easier it is to keep up with Scratch.
 
 Solid saving is switched on with a single new prop, `canSaveToSolid`. Without
-it, the editor behaves exactly as before. The demo page turns it on:
+it, the editor behaves exactly as before. The demo page turns it on, and
+uses a second prop, `solidClientId`, to say where Solid servers can find a
+description of the editor (more on that below):
 
 {% code_snippet lang="jsx" path="packages/scratch-gui/src/playground/solid-save-demo.jsx" start=23 %}
 root.render(
     <WrappedGui
         canEditTitle
         canSaveToSolid
+        solidClientId={`${window.location.origin}/solid-client-id.jsonld`}
         onClickLogo={onClickLogo}
     />
 );
@@ -168,10 +173,10 @@ The rest is four new files, all in `packages/scratch-gui/src/`:
 
 | File | What it does |
 | --- | --- |
-| [`lib/solid-save.ts`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/lib/solid-save.ts){:target="_blank" rel="noopener"} | Talks to Solid: logs in, finds the user's Pod, and writes the project to it. |
-| [`lib/solid-pending-save.ts`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/lib/solid-pending-save.ts){:target="_blank" rel="noopener"} | Keeps the project safe in the browser while the user is away logging in. |
-| [`containers/solid-save-modal.jsx`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/containers/solid-save-modal.jsx){:target="_blank" rel="noopener"} | Runs the save from the editor: starts the login, finishes the save when the user comes back, and puts the project back into the editor. |
-| [`components/solid-save-modal/solid-save-modal.jsx`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/components/solid-save-modal/solid-save-modal.jsx){:target="_blank" rel="noopener"} | The "Save to your Solid Pod" dialog, where the user enters their WebID. |
+| [`lib/solid-save.ts`](https://github.com/viboko/scratch-editor/blob/initial-investigations/packages/scratch-gui/src/lib/solid-save.ts){:target="_blank" rel="noopener"} | Talks to Solid: logs in, finds the user's Pod, and writes the project to it. |
+| [`lib/solid-pending-save.ts`](https://github.com/viboko/scratch-editor/blob/initial-investigations/packages/scratch-gui/src/lib/solid-pending-save.ts){:target="_blank" rel="noopener"} | Keeps the project safe in the browser while the user is away logging in. |
+| [`containers/solid-save-modal.jsx`](https://github.com/viboko/scratch-editor/blob/initial-investigations/packages/scratch-gui/src/containers/solid-save-modal.jsx){:target="_blank" rel="noopener"} | Runs the save from the editor: starts the login, finishes the save when the user comes back, and puts the project back into the editor. |
+| [`components/solid-save-modal/solid-save-modal.jsx`](https://github.com/viboko/scratch-editor/blob/initial-investigations/packages/scratch-gui/src/components/solid-save-modal/solid-save-modal.jsx){:target="_blank" rel="noopener"} | The "Save to your Solid Pod" dialog, where the user enters their WebID. |
 
 It's built on Inrupt's
 [`@inrupt/solid-client`](https://www.npmjs.com/package/@inrupt/solid-client){:target="_blank" rel="noopener"}
@@ -203,28 +208,32 @@ sequenceDiagram
     Child->>IdP: Log in, authorise Scratch
     IdP-->>Editor: Redirect back, with a token
     Editor->>IDB: Take the stashed project
-    Editor->>Pod: Write scratch/satchel.json
+    Editor->>Pod: Write scratch/satchel.sb3
     Editor-->>Child: "Saved", project back in the editor
 </div>
 
 Before redirecting, the editor finds the user's login provider from their
-WebID profile and stashes the project, both as the JSON that gets saved and
-as a complete `.sb3` file so it can be put back into the editor afterwards:
+WebID profile and stashes the project as a complete `.sb3` file, so it can be
+saved and put back into the editor afterwards. The login names a Client ID
+Document: a small public file describing the editor, which the Solid server
+reads each time someone logs in, so Scratch never has to register itself with
+the server first:
 
 {% code_snippet lang="ts" path="packages/scratch-gui/src/lib/solid-save.ts" start=145 %}
-export const startSolidSave = async ({webId, title, projectJson, projectSb3, isRenewal = false}: {
+export const startSolidSave = async ({webId, title, projectSb3, isRenewal = false, clientId}: {
     webId: string;
     title: string;
-    projectJson: string;
     projectSb3: Blob;
     isRenewal?: boolean;
+    clientId?: string;
 }): Promise<void> => {
     const oidcIssuer = await resolveOidcIssuer(webId);
-    await putPendingSolidSave({webId, isRenewal, title, projectJson, projectSb3});
+    await putPendingSolidSave({webId, isRenewal, title, projectSb3});
     await login({
         oidcIssuer,
         redirectUrl: `${window.location.origin}${window.location.pathname}`,
-        clientName: 'Scratch'
+        clientName: 'Scratch',
+        clientId
     });
 };
 {% endcode_snippet %}
@@ -232,7 +241,7 @@ export const startSolidSave = async ({webId, title, projectJson, projectSb3, isR
 When the page loads again, the editor checks whether it's coming back from a
 login, and if a save was waiting, finishes it:
 
-{% code_snippet lang="ts" path="packages/scratch-gui/src/lib/solid-save.ts" start=166 %}
+{% code_snippet lang="ts" path="packages/scratch-gui/src/lib/solid-save.ts" start=167 %}
 export const completePendingSolidSave = async (): Promise<CompletedSolidSave | null> => {
     const returningFromLogin = new URLSearchParams(window.location.search).has('state');
     // Restoring the previous session is what lets later saves skip the login.
@@ -242,7 +251,7 @@ export const completePendingSolidSave = async (): Promise<CompletedSolidSave | n
     const pending = await takePendingSolidSave();
     if (!pending) return null;
 
-    const {webId, isRenewal, title, projectJson, projectSb3} = pending;
+    const {webId, isRenewal, title, projectSb3} = pending;
     if (!sessionInfo?.isLoggedIn) {
         return {
             outcome: {status: 'error', message: 'The Solid login was not completed.'},
@@ -254,7 +263,7 @@ export const completePendingSolidSave = async (): Promise<CompletedSolidSave | n
     rememberWebId(webId);
 
     try {
-        const url = await writeProject(webId, title, projectJson);
+        const url = await writeProject(webId, title, projectSb3);
         return {outcome: {status: 'saved', url}, isRenewal, title, projectSb3};
     } catch (error) {
         log.error(`completePendingSolidSave: failed to write the project for ${webId}`, error);
@@ -266,11 +275,11 @@ export const completePendingSolidSave = async (): Promise<CompletedSolidSave | n
 ### Writing to the Pod
 
 The write itself is short. It finds the user's Pod from their profile,
-makes a `scratch/` folder in it if there isn't one, and writes the project
-there, named after its title:
+makes a `scratch/` folder in it if there isn't one, and writes the project's
+`.sb3` file there, named after its title:
 
-{% code_snippet lang="ts" path="packages/scratch-gui/src/lib/solid-save.ts" start=77 %}
-const writeProject = async (webId: string, title: string, projectJson: string): Promise<string> => {
+{% code_snippet lang="ts" path="packages/scratch-gui/src/lib/solid-save.ts" start=78 %}
+const writeProject = async (webId: string, title: string, projectSb3: Blob): Promise<string> => {
     const {fetch} = getDefaultSession();
     const [podUrl] = await getPodUrlAll(webId, {fetch});
     if (!podUrl) {
@@ -280,10 +289,7 @@ const writeProject = async (webId: string, title: string, projectJson: string): 
     await ensureContainer(containerUrl, fetch);
 
     const fileUrl = new URL(fileNameForTitle(title), containerUrl).href;
-    await overwriteFile(fileUrl, new Blob([projectJson], {type: 'application/json'}), {
-        contentType: 'application/json',
-        fetch
-    });
+    await overwriteFile(fileUrl, projectSb3, {contentType: SB3_CONTENT_TYPE, fetch});
     return fileUrl;
 };
 {% endcode_snippet %}
@@ -297,15 +303,15 @@ allowed: it accepts it because the logged-in user owns the Pod.
 Once someone has logged in, later saves go straight to the Pod with no
 dialog, just Scratch's usual "Saving…" and "Project saved." alerts.
 
-One thing I learned the hard way: Solid sessions are short-lived. The Inrupt
-library only refreshes an access token if the login that produced it
+The Inrupt library only refreshes an access token if the login that produced it
 returned a refresh token, and a session silently restored after a page load
 doesn't have one. So when a save finds no session, or the Pod rejects the
 token with an HTTP 401, the editor logs in again by itself, using the WebID
 from the last successful login, rather than showing the dialog again:
 
-{% code_snippet lang="jsx" path="packages/scratch-gui/src/containers/solid-save-modal.jsx" start=124 %}
-        saveToSolidPod({title: projectTitle, projectJson})
+{% code_snippet lang="jsx" path="packages/scratch-gui/src/containers/solid-save-modal.jsx" start=126 %}
+        savingSb3
+            .then(projectSb3 => saveToSolidPod({title: projectTitle, projectSb3}))
             .then(() => {
                 onShowSaved();
                 onClose();
@@ -326,12 +332,9 @@ genuinely fails.
 - **No loading.** Projects can be saved to a Pod but not opened from one.
   There's no "Open from your Pod" yet, so the only way to see a saved project
   is with another Solid app, as in the demo.
-- **The code above saves only the project's code.** It writes Scratch's
-  project JSON, which refers to costumes and sounds by their hash rather than
-  including them. I've since changed the save to write the complete `.sb3`
-  file, costumes and sounds included, which is what the video shows, so a
-  saved project now has everything needed to open it again. The description
-  and thumbnail that should sit alongside it aren't written yet.
+- **No description or thumbnail.** Each project is saved as a single `.sb3`
+  file, with everything needed to open it again. The description and
+  thumbnail that should sit alongside it aren't written yet.
 - **The Solid code lives inside the Scratch fork.** The plan is for
   everything that isn't Scratch-specific (where things go in a Pod, saving
   and loading, and later the sharing rules) to live in a separate core
@@ -343,33 +346,12 @@ genuinely fails.
   right default, but that's all there is so far.
 - **Tested only against a local Community Solid Server.** It hasn't been run
   against Inrupt's Enterprise Solid Server, or any hosted Pod.
-- **Rough edges in the login.** The user types their WebID by hand, and
-  Scratch registers itself with each Solid provider on the fly rather than
-  publishing a Client ID Document, so the provider can only show "Scratch"
-  as the app's name, unverified.
+- **Rough edges in the login.** The user types their WebID by hand. Scratch
+  now identifies itself with a Client ID Document, but only the demo's local
+  development server provides one, and it says little more than the app's
+  name. A hosted editor would need its own, published at a public address.
 - **Projects are named by title.** Two projects with the same title
   overwrite each other.
-
-## Next steps {#next-steps}
-
-1. **Move the Solid code into the core package.** Split `solid-save.ts` into
-   an MIT-licensed core package that knows about Pods but not Scratch, and a
-   thin Scratch adapter in the fork. Doing this before adding more features
-   keeps the licence boundary honest from the start.
-2. **Load from a Pod.** Give each saved `.sb3` its own folder, with a
-   description and thumbnail, and add "Open from your Pod". This finishes the
-   first must-have.
-3. **Test against the ODI's servers.** Run the same flow on ODI-hosted Pods,
-   on both servers, and find out early what differs.
-4. **Publish a Client ID Document** for the editor, so providers can show
-   who's asking for access.
-5. **Draft and publish the vocabulary** for guardianship, share requests,
-   decisions and the audit log.
-6. **Build the sharing dashboard and the agent:** linking a guardian, asking
-   to share a project with a Code Club, both child and guardian approving,
-   either revoking, and people being told when access starts or ends.
-7. **Get informal feedback** from club leaders and parents, using synthetic
-   data only, and write up what Solid does and doesn't yet support well.
 
 {% include mermaid.html %}
 
