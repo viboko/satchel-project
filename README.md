@@ -25,6 +25,12 @@ just dev
 
 The site will be available at <http://localhost:4002>.
 
+`just dev`'s server (Jekyll's WEBrick) can't serve video reliably: in
+Chrome a video stalls partway through, or fails to seek. To check a page
+with video, run `just preview` instead. It builds the site and serves it
+with `http-server` at <http://localhost:4003>, which handles video the way
+GitHub Pages does, but without live reload.
+
 ## Checks
 
 The `ci` GitHub Actions workflow runs three independent checks on every push

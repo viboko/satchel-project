@@ -239,16 +239,18 @@ genuinely fails.
 
 ## The demo {#demo}
 
+{% assign demo_video = '/assets/videos/2026-10-25-save-to-pod-demo.mp4' | versioned_url %}
 <figure class="video">
   <video controls preload="metadata" width="1280" height="800"
-         poster="{{ '/assets/videos/2026-10-25-save-to-pod-demo-poster.webp' | relative_url }}">
-    <source src="{{ '/assets/videos/2026-10-25-save-to-pod-demo.mp4' | relative_url }}" type="video/mp4">
-    <a href="{{ '/assets/videos/2026-10-25-save-to-pod-demo.mp4' | relative_url }}">Download the demo video (MP4, 4.7 MB)</a>
+         poster="{{ '/assets/videos/2026-10-25-save-to-pod-demo-poster.webp' | versioned_url }}">
+    <source src="{{ demo_video }}" type="video/mp4">
   </video>
   <figcaption>
     Saving a Scratch project to a Solid Pod, finding it with a different Solid
     app, and looking inside it. 1 minute 58 seconds, narrated, with on-screen
     captions.
+    <a href="{{ demo_video }}" download>Download the video</a> (MP4, 4.7 MB)
+    if it won't play here.
   </figcaption>
 </figure>
 

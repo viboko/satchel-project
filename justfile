@@ -11,6 +11,10 @@ install:
 dev:
 	bundle exec jekyll serve --host 0.0.0.0 --port 4002
 
+# Build the site and serve it like GitHub Pages does, without live reload (use it to check video, which `dev` can't serve reliably)
+preview: build
+	npx http-server _site -p 4003 -e html
+
 # Build the production site
 build:
 	bundle exec jekyll build
