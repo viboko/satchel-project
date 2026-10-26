@@ -478,6 +478,13 @@ main {
     white-space: normal;
     overflow-wrap: anywhere;
   }
+
+  // Code in a table sits straight on the white cell: the tinted background
+  // inline code has elsewhere makes linked code hard to read here.
+  td code {
+    padding: 0;
+    background: none;
+  }
 }
 
 // Posts: the date close under the title, set apart from the body text.
@@ -720,9 +727,37 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   }
 
   figcaption {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
     padding: 0.75rem 1.25rem;
     color: $color-text-muted;
     font-size: 0.8rem;
+  }
+}
+
+// The download icon on the right of the video's caption, styled like the
+// copy button on commands.
+.video__download {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  background: $color-band-bg;
+  border: 1px solid $color-border;
+  border-radius: 0.4rem;
+
+  &,
+  &:visited {
+    color: $color-text-muted;
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-accent;
+    color: $color-text;
   }
 }
 
