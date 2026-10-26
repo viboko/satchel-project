@@ -30,10 +30,8 @@ code_source:
   </video>
   <figcaption>
     Saving a Scratch project to a Solid Pod, finding it with a different Solid
-    app, and looking inside it. 1 minute 58 seconds, narrated, with on-screen
-    captions.
-    <a href="{{ demo_video }}" download>Download the video</a> (MP4, 4.7 MB)
-    if it won't play here.
+    app, and looking inside it.
+    <a href="{{ demo_video }}" download>Download the video</a>
   </figcaption>
 </figure>
 
@@ -114,16 +112,12 @@ anywhere the tools below do.
    `.zip` first). Inside are `project.json`, with your scripts and variables,
    and every costume and sound as an ordinary file.
 
-To run the demo again from an empty Solid server, stop the server from
-step 3 (Ctrl+C in its terminal). Then delete everything it stored,
-including your account and Pod, and start it again:
+**Note**: To run the demo again from an empty Solid server, stop the server from
+step 3 (Ctrl+C in its terminal). Then delete everything it stored, like so:
 
 ```bash
 just clean
-just css-up
 ```
-
-Then sign up and create `my-pod` again, as in step 4.
 
 </details>
 
@@ -318,25 +312,7 @@ from the last successful login, rather than showing the dialog again:
 The dialog only appears for someone who has never logged in, or when a save
 genuinely fails.
 
-### Tests and tooling
-
-- **Unit tests.** About 700 lines of Jest tests cover the save logic, the
-  pending-save stash (using `fake-indexeddb`), the dialog and its container.
-  They run in the fork's CI alongside Scratch's own tests.
-- **A local Solid server.** `just css-up` runs a Community Solid Server on
-  the developer's own machine, and the fork's README explains how to try the
-  whole flow against it.
-- **A recorded, scripted demo.** The video at the top isn't a screen recording
-  of me clicking about. It's a [Playwright](https://playwright.dev/){:target="_blank" rel="noopener"}
-  script, kept on the fork's [`satchel-demo` branch](https://github.com/viboko/scratch-editor/tree/satchel-demo/demo){:target="_blank" rel="noopener"},
-  that starts an empty Solid server, drives both browser tabs, and adds the
-  captions. The narration is generated from the same captions by a
-  text-to-speech model running locally. Re-running `just demo` re-records the
-  whole thing, so the demo can't quietly fall out of step with the code.
-
 ## What the demo doesn't do yet {#gaps}
-
-This is a first slice, and it's worth being plain about what's missing.
 
 - **No loading.** Projects can be saved to a Pod but not opened from one.
   There's no "Open from your Pod" yet, so the only way to see a saved project
@@ -367,9 +343,6 @@ This is a first slice, and it's worth being plain about what's missing.
 
 ## Next steps {#next-steps}
 
-In roughly this order, fitting the
-[roadmap in the application](/application/):
-
 1. **Move the Solid code into the core package.** Split `solid-save.ts` into
    an MIT-licensed core package that knows about Pods but not Scratch, and a
    thin Scratch adapter in the fork. Doing this before adding more features
@@ -388,87 +361,6 @@ In roughly this order, fitting the
    either revoking, and people being told when access starts or ends.
 7. **Get informal feedback** from club leaders and parents, using synthetic
    data only, and write up what Solid does and doesn't yet support well.
-
-## How the ODI could help {#odi}
-
-The save flow shows the Solid basics working. The hard, unbuilt parts are
-the ones where I'd most value the ODI's help.
-
-### Hosted Pods and test identities
-
-- **Test Pods and WebIDs for every role in the story:** a child (ideally two),
-  a guardian, a second parent who is deliberately *not* a linked guardian, a
-  Code Club, and the agent, plus a second agent identity to show a family
-  switching agents without losing anything.
-- **Whether I can create test accounts myself**, or need to request each one.
-- **Server settings, checked early:** whether the hosted servers allow
-  browser apps on other origins to read and write Pods (CORS), so it doesn't
-  turn up as a blocker in the middle of the build.
-
-### Access control: the genuinely hard part
-
-- **WAC or ACP, and which versions?** The servers' access-control language
-  decides a lot of the agent's design.
-- **Two-party consent.** Solid has no built-in way to require two people to
-  agree before access is granted, which is why the design needs an agent.
-  I'd value pair-programming and review on whether that pattern is sound, and
-  on scoping the agent's Control permission to the Satchel folder only.
-- **ACP extension points.** Does the hosted ACP support matching on
-  verifiable credentials (`acp:vc`), or a custom attribute the server
-  resolves? If not, parts of the consent model fall back to being enforced by
-  the application rather than the Pod, which is a weaker guarantee, and I'd
-  like to know that before building it.
-- **How the agent logs in.** It runs on a server with no browser, so it needs
-  client credentials or static registration, and the right approach depends
-  on the server.
-- **Solid Notifications.** Whether the servers support the notifications
-  protocol, so the agent can react to changes in a Pod rather than relying on
-  being pinged and on routine checks.
-
-### Workshops: settling the architecture before building
-
-The adoption and implementation-roadmap workshops are the right place to
-settle the decisions above (WAC or ACP, how the agent is triggered, how
-revocation is recorded) against what the ODI's servers really support,
-before February's build work commits to one answer.
-
-### Publishing the vocabulary
-
-The vocabulary mostly reuses existing ones (DPV, ODRL, PROV-O, FOAF,
-RELATIONSHIP and schema.org), with a small guardian/dependent extension.
-I'd welcome review of it, advice on where to publish it so it lasts (a
-persistent namespace such as w3id.org, under CC BY 4.0), and help with open
-design questions, such as whether a revoked share should be a new record or
-a change of state on the old one.
-
-### Safeguarding, data protection and the Children's Code
-
-This is where I most need expertise I don't have. No real child's data will
-be used during the support period. Before any pilot, I'd like the ODI's
-input on what a safeguarding and data-protection review (likely including a
-Data Protection Impact Assessment) should cover, and early feedback on how
-the design fares against the ICO's Children's Code: an agent that holds none
-of the children's work, nothing shareable until a guardian is linked, and a
-real say for the child alongside the guardian.
-
-### Connections and community
-
-- **Other projects facing similar problems.** Acting on someone's behalf, and
-  recovering lost credentials, are unlikely to be problems unique to
-  children's data. If others in the cohort have tackled them, I'd like to
-  learn from them.
-- **Where findings should land.** The Solid forum, the W3C Solid Community
-  Group, or the Linked Web Storage Working Group: wherever the findings on
-  two-party consent and expiring grants would be most useful.
-- **Credibility for a pilot.** A future pilot with Code Club or the Raspberry
-  Pi Foundation is far easier to propose with the ODI's backing and a public
-  write-up than as a solo developer.
-
-### Mutual, not one-way
-
-The gaps this project runs into, like two-party consent and grants that
-expire, are worth documenting whatever happens to Satchel itself. I'd rather
-document them accurately, with the ODI engineers' input, than guess.
 
 {% include mermaid.html %}
 
