@@ -726,6 +726,56 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   }
 }
 
+// The copy button that assets/js/copy-code.js adds to commands meant to be
+// pasted into a terminal. It shows while the block is hovered or the button
+// has focus, and always on touch screens, which can't hover.
+.copy-code__block {
+  position: relative;
+
+  // Room for the button, so it doesn't cover the end of the first line.
+  .page__content & pre {
+    padding-right: 3rem;
+  }
+}
+
+.copy-code {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: $color-band-bg;
+  border: 1px solid $color-border;
+  border-radius: 0.4rem;
+  color: $color-text-muted;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+
+  .copy-code__block:hover &,
+  &:focus-visible {
+    opacity: 1;
+  }
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-text;
+  }
+
+  // Stays visible while it shows the tick, even if the pointer has moved off.
+  &--done {
+    opacity: 1;
+    color: #2f6b3a;
+  }
+
+  @media (hover: none) {
+    opacity: 1;
+  }
+}
+
 .transcript {
   margin: 1.5rem 0;
   padding: 0.75rem 1.25rem;

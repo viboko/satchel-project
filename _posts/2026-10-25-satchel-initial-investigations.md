@@ -37,7 +37,7 @@ code_source:
   </figcaption>
 </figure>
 
-<details class="transcript" markdown="1">
+<details class="transcript run-locally" markdown="1">
 <summary>How to run the demo locally</summary>
 
 Everything runs on your own machine: a local Solid server, and the Scratch
@@ -47,11 +47,17 @@ anywhere the tools below do.
 1. **Install the tools.** You'll need [Git](https://git-scm.com/){:target="_blank" rel="noopener"},
    [Node.js](https://nodejs.org/){:target="_blank" rel="noopener"} 24, and
    [just](https://just.systems/){:target="_blank" rel="noopener"}, a command
-   runner. On a Mac with Homebrew, `brew install just` installs just.
+   runner. On a Mac with Homebrew, you can install just with:
+
+   ```bash
+   brew install just
+   ```
+
 2. **Clone the fork, on the `satchel-demo` branch, then install and build
-   it.** If you use [nvm](https://github.com/nvm-sh/nvm){:target="_blank" rel="noopener"},
-   `nvm install` picks up the exact Node.js version from the fork's `.nvmrc`.
-   The build is only needed once, and takes a few minutes.
+   it.** The `nvm install` line picks up the exact Node.js version from the
+   fork's `.nvmrc`; leave it out if you don't use
+   [nvm](https://github.com/nvm-sh/nvm){:target="_blank" rel="noopener"}. The
+   build is only needed once, and takes a few minutes.
 
    ```bash
    git clone --branch satchel-demo https://github.com/viboko/scratch-editor.git
@@ -63,27 +69,29 @@ anywhere the tools below do.
 
 3. **Start a Solid server.** This runs a
    [Community Solid Server](https://github.com/CommunitySolidServer/CommunitySolidServer){:target="_blank" rel="noopener"}
-   at `http://localhost:3000`, keeping its data in `.css-data`. Leave it
-   running.
+   at [http://localhost:3000](http://localhost:3000){:target="_blank" rel="noopener"},
+   keeping its data in `.css-data`. Leave it running.
 
    ```bash
    just css-up
    ```
 
-4. **Create an account and a Pod.** Open `http://localhost:3000/.account/`,
+4. **Create an account and a Pod.** Open
+   [http://localhost:3000/.account/](http://localhost:3000/.account/){:target="_blank" rel="noopener"},
    choose **Sign up**, and register with any email address and password:
    they only exist on your machine. Then choose **Create pod**, name it
    `my-pod`, and note your WebID:
    `http://localhost:3000/my-pod/profile/card#me`.
-5. **Start the Scratch editor.** In a second terminal, in the same folder:
+5. **Start the Scratch editor.** In a second terminal, in the same folder,
+   run:
 
    ```bash
    just dev
    ```
 
-   Once webpack has finished compiling, open the editor with Solid saving
-   switched on, at `http://localhost:8601/solid-save.html`, or run
-   `just browse-solid` in a third terminal.
+   Once webpack has finished compiling, open the editor, with Solid saving
+   switched on, at
+   [http://localhost:8601/solid-save.html](http://localhost:8601/solid-save.html){:target="_blank" rel="noopener"}.
 6. **Make something.** Make some changes to the Scratch project: add some
    blocks, draw a costume, record a sound. Give it a title in the box at the
    top, as that becomes its file name in the Pod.
@@ -452,3 +460,5 @@ expire, are worth documenting whatever happens to Satchel itself. I'd rather
 document them accurately, with the ODI engineers' input, than guess.
 
 {% include mermaid.html %}
+
+<script src="{{ '/assets/js/copy-code.js' | relative_url }}" defer></script>

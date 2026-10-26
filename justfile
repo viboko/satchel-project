@@ -31,9 +31,9 @@ lint-scss:
 lint-js:
 	npx eslint .
 
-# Lint the built html
+# Lint the built html (localhost links point at servers a post asks the reader to run, so can't be checked)
 lint-html: build
-	LANG=en_US.UTF-8 bundle exec htmlproofer ./_site --disable-external
+	LANG=en_US.UTF-8 bundle exec htmlproofer ./_site --disable-external --ignore-urls '/^http:\/\/localhost[:\/]/'
 
 # Check robots.txt, sitemap.xml, and that OG/canonical URLs are absolute
 lint-seo: build
