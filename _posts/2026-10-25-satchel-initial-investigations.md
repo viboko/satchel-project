@@ -17,7 +17,7 @@ code_source:
   ref: 5f27c5d53cbc8f7775c21634718d641ebaa5115a
 ---
 
-<!-- Code snippets and the video, diagram and transcript are HTML, or look
+<!-- Code snippets and the video, diagram and collapsed section are HTML, or look
      like it to markdownlint, and the code inside a code_snippet tag looks
      like an indented code block. -->
 <!-- markdownlint-disable MD033 MD046 -->
@@ -36,78 +36,6 @@ code_source:
     if it won't play here.
   </figcaption>
 </figure>
-
-What happens in the video:
-
-1. **A brand new Solid server.** A Community Solid Server is running on the
-   local machine, with no accounts on it. We sign up, and create a Pod called
-   `my-pod`. The Pod comes with a WebID,
-   `http://localhost:3000/my-pod/profile/card#me`: the user's identity on the
-   Solid web.
-2. **The Scratch editor, with Solid saving switched on.** We load a small
-   project from the computer and play it: the Scratch cat walks, jumps, and
-   picks up a satchel.
-3. **Saving to the Pod.** File > Save now opens the "Save to your Solid Pod"
-   dialog. We enter the WebID, and Scratch sends us to the Solid server to
-   log in.
-4. **Authorising Scratch.** The Solid server asks whether Scratch may access
-   the Pod. This is the point to notice: the user grants an app access to
-   their storage, rather than handing their work to the app.
-5. **Back in the editor.** The save finishes, and the project is back
-   exactly as it was.
-6. **Finding it with a different app.** We sign in to
-   [Solid File Manager](https://filemanager.solid-experiments.org/){:target="_blank" rel="noopener"},
-   an independent Solid app with no connection to Scratch, using the same
-   WebID. It opens the Pod, the `scratch` folder, and `satchel.sb3`: the
-   project Scratch just saved. The file manager can't preview an `.sb3`.
-7. **Looking inside it.** An `.sb3` is just a zip, so we download it from the
-   Pod and open it with
-   [ezyZip](https://www.ezyzip.com/extract-zip-file-online.html){:target="_blank" rel="noopener"},
-   an ordinary online zip tool that knows nothing about Scratch or Solid.
-   Inside are `project.json`, with the scripts and variables (`has satchel`
-   is 1, because the cat picked it up), and every costume and sound, as
-   ordinary files.
-
-That last step is the point of the whole project in miniature. The work
-belongs to the person who made it, in storage they control, rather than to
-the app they made it in.
-
-<details class="transcript" markdown="1">
-<summary>Read the narration</summary>
-
-Let's demo how we could use Satchel, to save a Scratch project to a Solid
-Pod.
-
-Here's a brand new Solid server, running locally. First, let's sign up for
-an account. Now we create a Pod, and call it "my pod". And the Pod comes with
-a WebID. That's our identity, on the Solid web.
-
-Over to Scratch! This is the editor, with saving to Solid switched on. Let's
-load a project from the computer. Click the green flag to run it. Off we go!
-Jump! On to the satchel… and, pick it up!
-
-Now, the important bit: saving the project to our Pod. File, then Save now.
-Scratch asks for our WebID, so it knows where to log us in. The Solid server
-checks with us: is Scratch allowed to save here? Yes, it is. Saved! And we're
-straight back in the editor, right where we left off.
-
-Here's the clever part. The project isn't locked inside Scratch: any Solid
-app can reach it. Let's try a file manager. Same WebID, same Pod. We just
-let the file manager in. We're in. Let's open the Pod… then the scratch
-folder… and there's the project that Scratch saved.
-
-The file manager doesn't know what an `.sb3` file is. But here's the thing:
-an `.sb3` file is just a zip. So let's download it from the Pod… and open it
-with an ordinary zip tool, one that knows nothing about Scratch, or Solid.
-Inside, there's the project, and every costume and sound it uses.
-`project.json` holds the scripts and the variables. And look: `has satchel`
-is 1. And the costumes are just ordinary pictures. Here's our cat, holding
-the satchel.
-
-So the whole project lives in the child's own Pod, open to any app they
-choose.
-
-</details>
 
 <details class="transcript" markdown="1">
 <summary>How to run the demo locally</summary>
