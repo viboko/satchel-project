@@ -501,6 +501,26 @@ main {
   font-size: 0.9em;
 }
 
+// Plain fenced code blocks, like commands to type, framed like the code
+// snippets below but without line numbers.
+.page__content .highlighter-rouge pre {
+  overflow-x: auto;
+  overscroll-behavior-x: none;
+  margin: 0.75rem 0 1rem;
+  padding: 0.6rem 1rem;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  font-size: 0.85rem;
+  line-height: 1.55;
+
+  code {
+    padding: 0;
+    background: none;
+    font-size: inherit;
+  }
+}
+
 // Code snippets, rendered by _plugins/code_snippet.rb: one element per line
 // carrying its line number in the source file, shown in a gutter on the
 // left, and a bar underneath linking to those lines on GitHub.
@@ -613,7 +633,8 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
 
 // Rouge's token classes. Each colour has at least AA contrast on both the
 // white background and the hover background.
-.code-snippet__code {
+.code-snippet__code,
+.page__content .highlighter-rouge {
   // Comments
   .c,
   .c1,
@@ -715,6 +736,11 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   summary {
     cursor: pointer;
     font-weight: 600;
+  }
+
+  // Inline code would otherwise vanish into the box's own background.
+  code {
+    background: $color-surface;
   }
 }
 

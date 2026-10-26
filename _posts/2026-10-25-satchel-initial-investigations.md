@@ -18,17 +18,167 @@ code_source:
 ---
 
 <!-- Code snippets and the video, diagram and transcript are HTML, or look
-     like it to markdownlint. -->
-<!-- markdownlint-disable MD033 -->
+     like it to markdownlint, and the code inside a code_snippet tag looks
+     like an indented code block. -->
+<!-- markdownlint-disable MD033 MD046 -->
 
-Since applying to the [Solid open call](https://theodi.org/news-and-events/blog/solid-open-call/){:target="_blank" rel="noopener"},
-I've done two things:
+{% assign demo_video = '/assets/videos/2026-10-25-save-to-pod-demo.mp4' | versioned_url %}
+<figure class="video">
+  <video controls preload="metadata" width="1280" height="800"
+         poster="{{ '/assets/videos/2026-10-25-save-to-pod-demo-poster.webp' | versioned_url }}">
+    <source src="{{ demo_video }}" type="video/mp4">
+  </video>
+  <figcaption>
+    Saving a Scratch project to a Solid Pod, finding it with a different Solid
+    app, and looking inside it. 1 minute 58 seconds, narrated, with on-screen
+    captions.
+    <a href="{{ demo_video }}" download>Download the video</a> (MP4, 4.7 MB)
+    if it won't play here.
+  </figcaption>
+</figure>
 
-- **Planned Satchel.** [What is Satchel](/what-is-satchel/) sets out what
-  it will build and how the pieces fit together.
-- **Saved a Scratch project to a Solid Pod.** My fork of the Scratch editor
-  can now save a project into the user's own Pod, demonstrated in
-  [viboko/scratch-editor#3](https://github.com/viboko/scratch-editor/pull/3){:target="_blank" rel="noopener"}.
+What happens in the video:
+
+1. **A brand new Solid server.** A Community Solid Server is running on the
+   local machine, with no accounts on it. We sign up, and create a Pod called
+   `my-pod`. The Pod comes with a WebID,
+   `http://localhost:3000/my-pod/profile/card#me`: the user's identity on the
+   Solid web.
+2. **The Scratch editor, with Solid saving switched on.** We load a small
+   project from the computer and play it: the Scratch cat walks, jumps, and
+   picks up a satchel.
+3. **Saving to the Pod.** File > Save now opens the "Save to your Solid Pod"
+   dialog. We enter the WebID, and Scratch sends us to the Solid server to
+   log in.
+4. **Authorising Scratch.** The Solid server asks whether Scratch may access
+   the Pod. This is the point to notice: the user grants an app access to
+   their storage, rather than handing their work to the app.
+5. **Back in the editor.** The save finishes, and the project is back
+   exactly as it was.
+6. **Finding it with a different app.** We sign in to
+   [Solid File Manager](https://filemanager.solid-experiments.org/){:target="_blank" rel="noopener"},
+   an independent Solid app with no connection to Scratch, using the same
+   WebID. It opens the Pod, the `scratch` folder, and `satchel.sb3`: the
+   project Scratch just saved. The file manager can't preview an `.sb3`.
+7. **Looking inside it.** An `.sb3` is just a zip, so we download it from the
+   Pod and open it with
+   [ezyZip](https://www.ezyzip.com/extract-zip-file-online.html){:target="_blank" rel="noopener"},
+   an ordinary online zip tool that knows nothing about Scratch or Solid.
+   Inside are `project.json`, with the scripts and variables (`has satchel`
+   is 1, because the cat picked it up), and every costume and sound, as
+   ordinary files.
+
+That last step is the point of the whole project in miniature. The work
+belongs to the person who made it, in storage they control, rather than to
+the app they made it in.
+
+<details class="transcript" markdown="1">
+<summary>Read the narration</summary>
+
+Let's demo how we could use Satchel, to save a Scratch project to a Solid
+Pod.
+
+Here's a brand new Solid server, running locally. First, let's sign up for
+an account. Now we create a Pod, and call it "my pod". And the Pod comes with
+a WebID. That's our identity, on the Solid web.
+
+Over to Scratch! This is the editor, with saving to Solid switched on. Let's
+load a project from the computer. Click the green flag to run it. Off we go!
+Jump! On to the satchel… and, pick it up!
+
+Now, the important bit: saving the project to our Pod. File, then Save now.
+Scratch asks for our WebID, so it knows where to log us in. The Solid server
+checks with us: is Scratch allowed to save here? Yes, it is. Saved! And we're
+straight back in the editor, right where we left off.
+
+Here's the clever part. The project isn't locked inside Scratch: any Solid
+app can reach it. Let's try a file manager. Same WebID, same Pod. We just
+let the file manager in. We're in. Let's open the Pod… then the scratch
+folder… and there's the project that Scratch saved.
+
+The file manager doesn't know what an `.sb3` file is. But here's the thing:
+an `.sb3` file is just a zip. So let's download it from the Pod… and open it
+with an ordinary zip tool, one that knows nothing about Scratch, or Solid.
+Inside, there's the project, and every costume and sound it uses.
+`project.json` holds the scripts and the variables. And look: `has satchel`
+is 1. And the costumes are just ordinary pictures. Here's our cat, holding
+the satchel.
+
+So the whole project lives in the child's own Pod, open to any app they
+choose.
+
+</details>
+
+<details class="transcript" markdown="1">
+<summary>How to run the demo locally</summary>
+
+Everything runs on your own machine: a local Solid server, and the Scratch
+editor from my fork. These steps were written on macOS, and should work
+anywhere the tools below do.
+
+1. **Install the tools.** You'll need [Git](https://git-scm.com/){:target="_blank" rel="noopener"},
+   [Node.js](https://nodejs.org/){:target="_blank" rel="noopener"} 24, and
+   [just](https://just.systems/){:target="_blank" rel="noopener"}, a command
+   runner. On a Mac with Homebrew, `brew install just` installs just.
+2. **Clone the fork, on the `satchel-demo` branch, then install and build
+   it.** If you use [nvm](https://github.com/nvm-sh/nvm){:target="_blank" rel="noopener"},
+   `nvm install` picks up the exact Node.js version from the fork's `.nvmrc`.
+   The build is only needed once, and takes a few minutes.
+
+   ```bash
+   git clone --branch satchel-demo https://github.com/viboko/scratch-editor.git
+   cd scratch-editor
+   nvm install
+   just install
+   npm run build
+   ```
+
+3. **Start a Solid server.** This runs a
+   [Community Solid Server](https://github.com/CommunitySolidServer/CommunitySolidServer){:target="_blank" rel="noopener"}
+   at `http://localhost:3000`, keeping its data in `.css-data`. Leave it
+   running.
+
+   ```bash
+   just css-up
+   ```
+
+4. **Create an account and a Pod.** Open `http://localhost:3000/.account/`,
+   choose **Sign up**, and register with any email address and password:
+   they only exist on your machine. Then choose **Create pod**, name it
+   `my-pod`, and note your WebID:
+   `http://localhost:3000/my-pod/profile/card#me`.
+5. **Start the Scratch editor.** In a second terminal, in the same folder:
+
+   ```bash
+   just dev
+   ```
+
+   Once webpack has finished compiling, open the editor with Solid saving
+   switched on, at `http://localhost:8601/solid-save.html`, or run
+   `just browse-solid` in a third terminal.
+6. **Make something.** Make some changes to the Scratch project: add some
+   blocks, draw a costume, record a sound. Give it a title in the box at the
+   top, as that becomes its file name in the Pod.
+7. **Save it to your Pod.** Choose **File > Save now**, enter your WebID,
+   and choose **Continue**. The Solid server asks you to log in, if you
+   aren't still logged in from step 4, then whether Scratch may access your
+   Pod: choose **Authorize**. You come back to the
+   editor, with your project as you left it, and a message saying where it
+   was saved. Saving again, with **File > Save now** or Ctrl/Cmd+S, now goes
+   straight to the Pod.
+8. **Find it with a different app.** Open
+   [Solid File Manager](https://filemanager.solid-experiments.org/){:target="_blank" rel="noopener"},
+   enter `http://localhost:3000` as your Solid provider, choose **Continue to
+   sign in**, and authorize it as before. If Chrome asks whether the site may
+   access devices on your local network, allow it: that's how the file
+   manager reaches your local Solid server. Open your Pod, then the `scratch`
+   folder, and your project is there as an `.sb3` file.
+9. **Look inside it.** Right-click the file and choose **Download**. An
+   `.sb3` is a zip, so any zip tool can open it (you may need to rename it to
+   `.zip` first). Inside are `project.json`, with your scripts and variables,
+   and every costume and sound as an ordinary file.
+
+</details>
 
 ## How the editor is built {#how-its-built}
 
@@ -229,102 +379,13 @@ genuinely fails.
 - **A local Solid server.** `just css-up` runs a Community Solid Server on
   the developer's own machine, and the fork's README explains how to try the
   whole flow against it.
-- **A recorded, scripted demo.** The video below isn't a screen recording
+- **A recorded, scripted demo.** The video at the top isn't a screen recording
   of me clicking about. It's a [Playwright](https://playwright.dev/){:target="_blank" rel="noopener"}
   script, kept on the fork's [`satchel-demo` branch](https://github.com/viboko/scratch-editor/tree/satchel-demo/demo){:target="_blank" rel="noopener"},
   that starts an empty Solid server, drives both browser tabs, and adds the
   captions. The narration is generated from the same captions by a
   text-to-speech model running locally. Re-running `just demo` re-records the
   whole thing, so the demo can't quietly fall out of step with the code.
-
-## The demo {#demo}
-
-{% assign demo_video = '/assets/videos/2026-10-25-save-to-pod-demo.mp4' | versioned_url %}
-<figure class="video">
-  <video controls preload="metadata" width="1280" height="800"
-         poster="{{ '/assets/videos/2026-10-25-save-to-pod-demo-poster.webp' | versioned_url }}">
-    <source src="{{ demo_video }}" type="video/mp4">
-  </video>
-  <figcaption>
-    Saving a Scratch project to a Solid Pod, finding it with a different Solid
-    app, and looking inside it. 1 minute 58 seconds, narrated, with on-screen
-    captions.
-    <a href="{{ demo_video }}" download>Download the video</a> (MP4, 4.7 MB)
-    if it won't play here.
-  </figcaption>
-</figure>
-
-What happens in the video:
-
-1. **A brand new Solid server.** A Community Solid Server is running on the
-   local machine, with no accounts on it. We sign up, and create a Pod called
-   `my-pod`. The Pod comes with a WebID,
-   `http://localhost:3000/my-pod/profile/card#me`: the user's identity on the
-   Solid web.
-2. **The Scratch editor, with Solid saving switched on.** We load a small
-   project from the computer and play it: the Scratch cat walks, jumps, and
-   picks up a satchel.
-3. **Saving to the Pod.** File > Save now opens the "Save to your Solid Pod"
-   dialog. We enter the WebID, and Scratch sends us to the Solid server to
-   log in.
-4. **Authorising Scratch.** The Solid server asks whether Scratch may access
-   the Pod. This is the point to notice: the user grants an app access to
-   their storage, rather than handing their work to the app.
-5. **Back in the editor.** The save finishes, and the project is back
-   exactly as it was.
-6. **Finding it with a different app.** We sign in to
-   [Solid File Manager](https://filemanager.solid-experiments.org/){:target="_blank" rel="noopener"},
-   an independent Solid app with no connection to Scratch, using the same
-   WebID. It opens the Pod, the `scratch` folder, and `satchel.sb3`: the
-   project Scratch just saved. The file manager can't preview an `.sb3`.
-7. **Looking inside it.** An `.sb3` is just a zip, so we download it from the
-   Pod and open it with
-   [ezyZip](https://www.ezyzip.com/extract-zip-file-online.html){:target="_blank" rel="noopener"},
-   an ordinary online zip tool that knows nothing about Scratch or Solid.
-   Inside are `project.json`, with the scripts and variables (`has satchel`
-   is 1, because the cat picked it up), and every costume and sound, as
-   ordinary files.
-
-That last step is the point of the whole project in miniature. The work
-belongs to the person who made it, in storage they control, rather than to
-the app they made it in.
-
-<details class="transcript" markdown="1">
-<summary>Read the narration</summary>
-
-Let's demo how we could use Satchel, to save a Scratch project to a Solid
-Pod.
-
-Here's a brand new Solid server, running locally. First, let's sign up for
-an account. Now we create a Pod, and call it "my pod". And the Pod comes with
-a WebID. That's our identity, on the Solid web.
-
-Over to Scratch! This is the editor, with saving to Solid switched on. Let's
-load a project from the computer. Click the green flag to run it. Off we go!
-Jump! On to the satchel… and, pick it up!
-
-Now, the important bit: saving the project to our Pod. File, then Save now.
-Scratch asks for our WebID, so it knows where to log us in. The Solid server
-checks with us: is Scratch allowed to save here? Yes, it is. Saved! And we're
-straight back in the editor, right where we left off.
-
-Here's the clever part. The project isn't locked inside Scratch: any Solid
-app can reach it. Let's try a file manager. Same WebID, same Pod. We just
-let the file manager in. We're in. Let's open the Pod… then the scratch
-folder… and there's the project that Scratch saved.
-
-The file manager doesn't know what an `.sb3` file is. But here's the thing:
-an `.sb3` file is just a zip. So let's download it from the Pod… and open it
-with an ordinary zip tool, one that knows nothing about Scratch, or Solid.
-Inside, there's the project, and every costume and sound it uses.
-`project.json` holds the scripts and the variables. And look: `has satchel`
-is 1. And the costumes are just ordinary pictures. Here's our cat, holding
-the satchel.
-
-So the whole project lives in the child's own Pod, open to any app they
-choose.
-
-</details>
 
 ## What the demo doesn't do yet {#gaps}
 
