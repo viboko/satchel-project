@@ -243,11 +243,12 @@ genuinely fails.
   <video controls preload="metadata" width="1280" height="800"
          poster="{{ '/assets/videos/2026-10-25-save-to-pod-demo-poster.webp' | relative_url }}">
     <source src="{{ '/assets/videos/2026-10-25-save-to-pod-demo.mp4' | relative_url }}" type="video/mp4">
-    <a href="{{ '/assets/videos/2026-10-25-save-to-pod-demo.mp4' | relative_url }}">Download the demo video (MP4, 3.5 MB)</a>
+    <a href="{{ '/assets/videos/2026-10-25-save-to-pod-demo.mp4' | relative_url }}">Download the demo video (MP4, 4.7 MB)</a>
   </video>
   <figcaption>
-    Saving a Scratch project to a Solid Pod, then reading it back with a
-    different Solid app. 1 minute 23 seconds, narrated, with on-screen captions.
+    Saving a Scratch project to a Solid Pod, finding it with a different Solid
+    app, and looking inside it. 1 minute 58 seconds, narrated, with on-screen
+    captions.
   </figcaption>
 </figure>
 
@@ -269,11 +270,18 @@ What happens in the video:
    their storage, rather than handing their work to the app.
 5. **Back in the editor.** The save finishes, and the project is back
    exactly as it was.
-6. **Reading it with a different app.** We sign in to
+6. **Finding it with a different app.** We sign in to
    [Solid File Manager](https://filemanager.solid-experiments.org/){:target="_blank" rel="noopener"},
    an independent Solid app with no connection to Scratch, using the same
-   WebID. It opens the Pod, the `scratch` folder, and `satchel.json`: the
-   project Scratch just saved.
+   WebID. It opens the Pod, the `scratch` folder, and `satchel.sb3`: the
+   project Scratch just saved. The file manager can't preview an `.sb3`.
+7. **Looking inside it.** An `.sb3` is just a zip, so we download it from the
+   Pod and open it with
+   [ezyZip](https://www.ezyzip.com/extract-zip-file-online.html){:target="_blank" rel="noopener"},
+   an ordinary online zip tool that knows nothing about Scratch or Solid.
+   Inside are `project.json`, with the scripts and variables (`has satchel`
+   is 1, because the cat picked it up), and every costume and sound, as
+   ordinary files.
 
 That last step is the point of the whole project in miniature. The work
 belongs to the person who made it, in storage they control, rather than to
@@ -282,24 +290,37 @@ the app they made it in.
 <details class="transcript" markdown="1">
 <summary>Read the narration</summary>
 
+Let's demo how we could use Satchel, to save a Scratch project to a Solid
+Pod.
+
 Here's a brand new Solid server, running locally. First, let's sign up for
 an account. Now we create a Pod, and call it "my pod". And the Pod comes with
-a Web ID. That's our identity, on the Solid web.
+a WebID. That's our identity, on the Solid web.
 
 Over to Scratch! This is the editor, with saving to Solid switched on. Let's
 load a project from the computer. Click the green flag to run it. Off we go!
 Jump! On to the satchel… and, pick it up!
 
 Now, the important bit: saving the project to our Pod. File, then Save now.
-Scratch asks for our Web ID, so it knows where to log us in. The Solid server
+Scratch asks for our WebID, so it knows where to log us in. The Solid server
 checks with us: is Scratch allowed to save here? Yes, it is. Saved! And we're
 straight back in the editor, right where we left off.
 
 Here's the clever part. The project isn't locked inside Scratch: any Solid
-app can reach it. Let's try a file manager. Same Web ID, same Pod. We just
+app can reach it. Let's try a file manager. Same WebID, same Pod. We just
 let the file manager in. We're in. Let's open the Pod… then the scratch
-folder… and there's the project that Scratch saved. There it is: the very
-same project, read back from the Pod, by a completely different app.
+folder… and there's the project that Scratch saved.
+
+The file manager doesn't know what an `.sb3` file is. But here's the thing:
+an `.sb3` file is just a zip. So let's download it from the Pod… and open it
+with an ordinary zip tool, one that knows nothing about Scratch, or Solid.
+Inside, there's the project, and every costume and sound it uses.
+`project.json` holds the scripts and the variables. And look: `has satchel`
+is 1. And the costumes are just ordinary pictures. Here's our cat, holding
+the satchel.
+
+So the whole project lives in the child's own Pod, open to any app they
+choose.
 
 </details>
 
@@ -310,12 +331,12 @@ This is a first slice, and it's worth being plain about what's missing.
 - **No loading.** Projects can be saved to a Pod but not opened from one.
   There's no "Open from your Pod" yet, so the only way to see a saved project
   is with another Solid app, as in the demo.
-- **The video and code above save only the project's code.** They write
-  Scratch's project JSON, which refers to costumes and sounds by their hash
-  rather than including them. Since recording, I've changed the save to write
-  the complete `.sb3` file instead, costumes and sounds included, so a saved
-  project now has everything needed to open it again. The description and
-  thumbnail that should sit alongside it aren't written yet.
+- **The code above saves only the project's code.** It writes Scratch's
+  project JSON, which refers to costumes and sounds by their hash rather than
+  including them. I've since changed the save to write the complete `.sb3`
+  file, costumes and sounds included, which is what the video shows, so a
+  saved project now has everything needed to open it again. The description
+  and thumbnail that should sit alongside it aren't written yet.
 - **The Solid code lives inside the Scratch fork.** The plan is for
   everything that isn't Scratch-specific (where things go in a Pod, saving
   and loading, and later the sharing rules) to live in a separate core
