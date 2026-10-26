@@ -114,6 +114,17 @@ anywhere the tools below do.
    `.zip` first). Inside are `project.json`, with your scripts and variables,
    and every costume and sound as an ordinary file.
 
+To run the demo again from an empty Solid server, stop the server from
+step 3 (Ctrl+C in its terminal). Then delete everything it stored,
+including your account and Pod, and start it again:
+
+```bash
+just clean
+just css-up
+```
+
+Then sign up and create `my-pod` again, as in step 4.
+
 </details>
 
 ## How the editor is built {#how-its-built}
