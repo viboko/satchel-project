@@ -5,7 +5,7 @@ description: >-
   Where Satchel stands in October 2026: a first working prototype that saves
   a Scratch project to a Solid Pod, how it's built, what it doesn't do yet,
   what comes next, and where the ODI could help.
-permalink: /updates/2026-10-25-first-prototype/
+permalink: /updates/2026-10-25-satchel-initial-investigations/
 # Shared directly ahead of the ODI interview: not linked from the rest of the
 # site, left out of the sitemap, and asking search engines not to index it.
 noindex: true
@@ -21,33 +21,14 @@ code_source:
      like it to markdownlint. -->
 <!-- markdownlint-disable MD033 -->
 
-## Where things stand {#status}
+Since applying to the [Solid open call](https://theodi.org/news-and-events/blog/solid-open-call/){:target="_blank" rel="noopener"},
+I've done two things:
 
-The application to the [Solid open call](https://theodi.org/news-and-events/blog/solid-open-call/){:target="_blank" rel="noopener"}
-went in as a Start-stage project, with nothing built. The plan, described on
-[What is Satchel](/what-is-satchel/), has five parts: Pod save and load
-built into Scratch, a reusable core package, a sharing dashboard where the
-child and their guardian decide together, a small replaceable agent that
-carries out those decisions, and a published vocabulary for all of it.
-
-Since applying I've built the first slice of the first part: **the Scratch
-editor can now save a project to a Solid Pod**. It runs against a real
-Solid server (a local [Community Solid Server](https://github.com/CommunitySolidServer/CommunitySolidServer){:target="_blank" rel="noopener"}),
-logs in with Solid-OIDC, and writes the project into the user's own Pod,
-where any other Solid app can read it.
-
-| Planned piece | Where it is |
-| --- | --- |
-| Pod save and load in Scratch | **Save works**, in a fork of `scratch-editor`. Load not started. |
-| Core package | Not started. The save code currently lives inside the fork. |
-| Sharing dashboard | Not started. |
-| Satchel agent | Not started. |
-| Vocabulary | Drafted in my working notes, not yet published. |
-
-Alongside it, I've also built [solid-cid-lint](https://solid-cid-lint.viboko.dev/){:target="_blank" rel="noopener"},
-a small validator for Solid-OIDC Client ID Documents, from the command line
-or in the browser. It came out of learning how Solid apps identify
-themselves to a login provider, and Satchel's apps will need one each.
+- **Planned Satchel.** [What is Satchel](/what-is-satchel/) sets out what
+  it will build and how the pieces fit together.
+- **Saved a Scratch project to a Solid Pod.** My fork of the Scratch editor
+  can now save a project into the user's own Pod, demonstrated in
+  [viboko/scratch-editor#3](https://github.com/viboko/scratch-editor/pull/3){:target="_blank" rel="noopener"}.
 
 ## How the editor is built {#how-its-built}
 
@@ -364,7 +345,7 @@ In roughly this order, fitting the
 3. **Test against the ODI's servers.** Run the same flow on ODI-hosted Pods,
    on both servers, and find out early what differs.
 4. **Publish a Client ID Document** for the editor, so providers can show
-   who's asking for access, checked with solid-cid-lint.
+   who's asking for access.
 5. **Draft and publish the vocabulary** for guardianship, share requests,
    decisions and the audit log.
 6. **Build the sharing dashboard and the agent:** linking a guardian, asking

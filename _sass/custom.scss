@@ -473,9 +473,13 @@ main {
   max-width: none;
 }
 
-// Posts: the date under the title, set apart from the body text.
+// Posts: the date close under the title, set apart from the body text.
+.post .page__title {
+  margin-bottom: 0.25rem;
+}
+
 .post__date {
-  margin: -0.5rem 0 2rem;
+  margin: 0 0 2rem;
   color: $color-accent;
   font-size: 1.15rem;
   font-weight: 600;
