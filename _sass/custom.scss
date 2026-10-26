@@ -471,6 +471,13 @@ main {
 // like the home page, rather than the narrower column of the other pages.
 .post {
   max-width: none;
+
+  // A file path in a table's first column can be wider than a phone
+  // screen, so let it wrap there, but only where it has to.
+  td:first-child {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }
 
 // Posts: the date close under the title, set apart from the body text.

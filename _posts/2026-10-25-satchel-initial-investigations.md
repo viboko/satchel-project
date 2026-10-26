@@ -64,12 +64,16 @@ change in the menu bar:
     onClickSave: () => dispatch(ownProps.canSaveToSolid ? openSolidSaveModal() : manualUpdateProject()),
 {% endcode_snippet %}
 
-The rest is three new files: [`solid-save.ts`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/lib/solid-save.ts){:target="_blank" rel="noopener"},
-which talks to Solid; [`solid-pending-save.ts`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/lib/solid-pending-save.ts){:target="_blank" rel="noopener"},
-which keeps the project safe while the user logs in; and a React
-[container](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/containers/solid-save-modal.jsx){:target="_blank" rel="noopener"}
-and [component](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/components/solid-save-modal/solid-save-modal.jsx){:target="_blank" rel="noopener"}
-for the dialog. It's built on Inrupt's
+The rest is four new files, all in `packages/scratch-gui/src/`:
+
+| File | What it does |
+| --- | --- |
+| [`lib/solid-save.ts`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/lib/solid-save.ts){:target="_blank" rel="noopener"} | Talks to Solid: logs in, finds the user's Pod, and writes the project to it. |
+| [`lib/solid-pending-save.ts`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/lib/solid-pending-save.ts){:target="_blank" rel="noopener"} | Keeps the project safe in the browser while the user is away logging in. |
+| [`containers/solid-save-modal.jsx`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/containers/solid-save-modal.jsx){:target="_blank" rel="noopener"} | Runs the save from the editor: starts the login, finishes the save when the user comes back, and puts the project back into the editor. |
+| [`components/solid-save-modal/solid-save-modal.jsx`](https://github.com/viboko/scratch-editor/blob/satchel/packages/scratch-gui/src/components/solid-save-modal/solid-save-modal.jsx){:target="_blank" rel="noopener"} | The "Save to your Solid Pod" dialog, where the user enters their WebID. |
+
+It's built on Inrupt's
 [`@inrupt/solid-client`](https://www.npmjs.com/package/@inrupt/solid-client){:target="_blank" rel="noopener"}
 and [`@inrupt/solid-client-authn-browser`](https://www.npmjs.com/package/@inrupt/solid-client-authn-browser){:target="_blank" rel="noopener"}
 libraries.
