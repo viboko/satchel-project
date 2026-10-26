@@ -11,6 +11,10 @@ install:
 dev:
 	bundle exec jekyll serve --host 0.0.0.0 --port 4002
 
+# Build the site and serve it like GitHub Pages does, without live reload (use it to check video, which `dev` can't serve reliably)
+preview: build
+	npx http-server _site -p 4003 -e html
+
 # Build the production site
 build:
 	bundle exec jekyll build
@@ -27,9 +31,9 @@ lint-scss:
 lint-js:
 	npx eslint .
 
-# Lint the built html
+# Lint the built html (localhost links point at servers a post asks the reader to run, so can't be checked)
 lint-html: build
-	LANG=en_US.UTF-8 bundle exec htmlproofer ./_site --disable-external
+	LANG=en_US.UTF-8 bundle exec htmlproofer ./_site --disable-external --ignore-urls '/^http:\/\/localhost[:\/]/'
 
 # Check robots.txt, sitemap.xml, and that OG/canonical URLs are absolute
 lint-seo: build
