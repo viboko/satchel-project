@@ -1,39 +1,72 @@
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js"></script>
 <script>
-  mermaid.initialize({
-    // diagram-modal.js renders the diagrams, once it can post-process them.
-    startOnLoad: false,
-    theme: "base",
-    themeVariables: {
-      fontFamily:
-        "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-      primaryColor: "#ffffff",
-      primaryTextColor: "#241a10",
-      primaryBorderColor: "#8a4a26",
-      lineColor: "#6b3a1e",
-      secondaryColor: "#e8dcc8",
-      secondaryTextColor: "#241a10",
-      secondaryBorderColor: "#ddcbb0",
-      tertiaryColor: "#f6f0e7",
-      tertiaryTextColor: "#241a10",
-      tertiaryBorderColor: "#ddcbb0",
-      noteBkgColor: "#e8dcc8",
-      noteTextColor: "#241a10",
-      noteBorderColor: "#ddcbb0",
-      actorBkg: "#ffffff",
-      actorBorder: "#8a4a26",
-      actorTextColor: "#241a10",
-      actorLineColor: "#5a4a3c",
-      signalColor: "#6b3a1e",
-      signalTextColor: "#241a10",
-      labelBoxBkgColor: "#e8dcc8",
-      labelBoxBorderColor: "#ddcbb0",
-      labelTextColor: "#241a10",
-      loopTextColor: "#241a10",
-      activationBorderColor: "#8a4a26",
-      activationBkgColor: "#f6f0e7",
-      sequenceNumberColor: "#ffffff"
-    }
-  });
+  // Mermaid's colours, from the site's palette (the custom properties at the
+  // top of _sass/custom.scss) in light or dark. Mermaid needs literal
+  // colours, so the two palettes are repeated here.
+  // diagram-modal.js initialises mermaid with these and renders the
+  // diagrams, and renders them again if the system's colour scheme changes.
+  window.mermaidConfig = (dark) => {
+    const c = dark
+      ? {
+          text: "#f0e6d8",
+          muted: "#c2b19e",
+          link: "#eba77a",
+          accent: "#dc9563",
+          onAccent: "#1b1511",
+          border: "#4d3d2f",
+          bg: "#1b1511",
+          surface: "#251d17",
+          band: "#2c231b"
+        }
+      : {
+          text: "#241a10",
+          muted: "#5a4a3c",
+          link: "#6b3a1e",
+          accent: "#8a4a26",
+          onAccent: "#ffffff",
+          border: "#ddcbb0",
+          bg: "#f6f0e7",
+          surface: "#ffffff",
+          band: "#e8dcc8"
+        };
+
+    return {
+      // diagram-modal.js renders the diagrams, once it can post-process them.
+      startOnLoad: false,
+      theme: "base",
+      themeVariables: {
+        darkMode: dark,
+        fontFamily:
+          "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+        background: c.bg,
+        primaryColor: c.surface,
+        primaryTextColor: c.text,
+        primaryBorderColor: c.accent,
+        lineColor: c.link,
+        secondaryColor: c.band,
+        secondaryTextColor: c.text,
+        secondaryBorderColor: c.border,
+        tertiaryColor: c.bg,
+        tertiaryTextColor: c.text,
+        tertiaryBorderColor: c.border,
+        noteBkgColor: c.band,
+        noteTextColor: c.text,
+        noteBorderColor: c.border,
+        actorBkg: c.surface,
+        actorBorder: c.accent,
+        actorTextColor: c.text,
+        actorLineColor: c.muted,
+        signalColor: c.link,
+        signalTextColor: c.text,
+        labelBoxBkgColor: c.band,
+        labelBoxBorderColor: c.border,
+        labelTextColor: c.text,
+        loopTextColor: c.text,
+        activationBorderColor: c.accent,
+        activationBkgColor: c.bg,
+        sequenceNumberColor: c.onAccent
+      }
+    };
+  };
 </script>
 <script src="{{ '/assets/js/diagram-modal.js' | relative_url }}"></script>

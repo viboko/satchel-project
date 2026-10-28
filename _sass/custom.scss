@@ -1,13 +1,75 @@
-// Palette drawn from the satchel logo (leather brown / near-black).
-$color-text: #241a10;
-$color-text-muted: #5a4a3c;
-$color-link: #6b3a1e;
-$color-link-visited: #4f2b16;
-$color-accent: #8a4a26;
-$color-border: #ddcbb0;
-$color-bg: #f6f0e7;
-$color-surface: #fff;
-$color-band-bg: #e8dcc8;
+// Palette drawn from the satchel logo (leather brown / near-black), as
+// custom properties, so the dark set below can replace it when the
+// visitor's system asks for dark mode. Every text colour keeps at least AA
+// contrast against each background it sits on, in both sets.
+:root {
+  color-scheme: light dark;
+
+  --color-text: #241a10;
+  --color-text-muted: #5a4a3c;
+  --color-link: #6b3a1e;
+  --color-link-visited: #4f2b16;
+  --color-accent: #8a4a26;
+  --color-on-accent: #fff; // Text on an accent-coloured background
+  --color-border: #ddcbb0;
+  --color-bg: #f6f0e7;
+  --color-surface: #fff;
+  --color-band-bg: #e8dcc8;
+  --color-error: #a4201a;
+  --color-success: #2f6b3a;
+  --color-backdrop: rgb(36 26 16 / 70%);
+  --post-bar-color: #a5724d; // Beside each post in the post lists
+
+  // Syntax highlighting in code snippets.
+  --code-gutter-bg: #faf6f0;
+  --code-hover-bg: #f3ebdd;
+  --code-number: #7a6a5c;
+  --code-keyword: #a8321c;
+  --code-constant: #1f5a8a;
+  --code-function: #6b3fa0;
+  --code-type: #0f6a6a;
+  --code-attribute: #8a5a00;
+  --code-string: #2f6b3a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #f0e6d8;
+    --color-text-muted: #c2b19e;
+    --color-link: #eba77a;
+    --color-link-visited: #d9a88a;
+    --color-accent: #dc9563;
+    --color-on-accent: #1b1511;
+    --color-border: #4d3d2f;
+    --color-bg: #1b1511;
+    --color-surface: #251d17;
+    --color-band-bg: #2c231b;
+    --color-error: #ff9a8a;
+    --color-success: #96d196;
+    --color-backdrop: rgb(0 0 0 / 75%);
+    --post-bar-color: #b98059;
+    --code-gutter-bg: #201913;
+    --code-hover-bg: #30261d;
+    --code-number: #a29180;
+    --code-keyword: #f4927a;
+    --code-constant: #86bdf0;
+    --code-function: #c9a3f0;
+    --code-type: #6fcdc6;
+    --code-attribute: #e6bb68;
+    --code-string: #96d196;
+  }
+}
+
+$color-text: var(--color-text);
+$color-text-muted: var(--color-text-muted);
+$color-link: var(--color-link);
+$color-link-visited: var(--color-link-visited);
+$color-accent: var(--color-accent);
+$color-on-accent: var(--color-on-accent);
+$color-border: var(--color-border);
+$color-bg: var(--color-bg);
+$color-surface: var(--color-surface);
+$color-band-bg: var(--color-band-bg);
 $max-width-page: 64rem;
 $radius: 0.75rem;
 
@@ -67,7 +129,7 @@ body {
   z-index: 100;
   padding: 0.5rem 1rem;
   background: $color-accent;
-  color: #fff;
+  color: $color-on-accent;
   border-radius: 0 0 $radius $radius;
   transition: top 0.15s ease-in-out;
 
@@ -311,7 +373,7 @@ main {
 
 // Set by word-count.js when an answer is over its limit.
 .word-count--over {
-  color: #a4201a;
+  color: var(--color-error);
   font-weight: 700;
 }
 
@@ -410,7 +472,7 @@ main {
     width: 1.6rem;
     height: 1.6rem;
     background: var(--built-accent);
-    color: #fff;
+    color: $color-on-accent;
     font-size: 0.85rem;
     font-weight: 700;
     border-radius: 50%;
@@ -444,6 +506,34 @@ main {
   &:nth-child(5) {
     --built-tint: #e3e5e8;
     --built-accent: #495364;
+  }
+
+  // Dark tints and light accents, so the numbers, in the background's
+  // colour, still read on the accents.
+  @media (prefers-color-scheme: dark) {
+    &:nth-child(1) {
+      --built-tint: #1f2b29;
+      --built-accent: #8db5ad;
+    }
+
+    &:nth-child(2) {
+      --built-tint: #33251a;
+    }
+
+    &:nth-child(3) {
+      --built-tint: #232b1c;
+      --built-accent: #a3bb84;
+    }
+
+    &:nth-child(4) {
+      --built-tint: #2f2227;
+      --built-accent: #c896aa;
+    }
+
+    &:nth-child(5) {
+      --built-tint: #22262d;
+      --built-accent: #9eaac0;
+    }
   }
 }
 
@@ -591,7 +681,7 @@ $post-bar-width: 9px;
 $post-bar-gap: 1.25rem;
 
 // Between the accent brown and the border tan: there, but not heavy.
-$post-bar-color: #a5724d;
+$post-bar-color: var(--post-bar-color);
 $post-hover-padding: 1rem;
 
 .post-list {
@@ -807,9 +897,9 @@ $post-hover-padding: 1rem;
 // Code snippets, rendered by _plugins/code_snippet.rb: one element per line
 // carrying its line number in the source file, shown in a gutter on the
 // left, and a bar underneath linking to those lines on GitHub.
-$code-gutter-bg: #faf6f0;
-$code-hover-bg: #f3ebdd;
-$code-number: #7a6a5c;
+$code-gutter-bg: var(--code-gutter-bg);
+$code-hover-bg: var(--code-hover-bg);
+$code-number: var(--code-number);
 
 .code-snippet {
   overflow: hidden;
@@ -936,7 +1026,7 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   .kv,
   .o,
   .ow {
-    color: #a8321c;
+    color: var(--code-keyword);
   }
 
   // Constants and numbers
@@ -946,26 +1036,26 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   .mi,
   .no,
   .bp {
-    color: #1f5a8a;
+    color: var(--code-constant);
   }
 
   // Functions
   .nf,
   .fm {
-    color: #6b3fa0;
+    color: var(--code-function);
   }
 
   // Types, classes, built-ins and JSX components
   .kt,
   .nb,
   .nc {
-    color: #0f6a6a;
+    color: var(--code-type);
   }
 
   // JSX attributes and object keys
   .na,
   .nl {
-    color: #8a5a00;
+    color: var(--code-attribute);
   }
 
   // Strings, including their delimiters
@@ -975,12 +1065,12 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   .sb,
   .dl,
   .sr {
-    color: #2f6b3a;
+    color: var(--code-string);
   }
 
   // ${…} inside a template string
   .si {
-    color: #a8321c;
+    color: var(--code-keyword);
   }
 
   .p {
@@ -1079,7 +1169,7 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   // Stays visible while it shows the tick, even if the pointer has moved off.
   &--done {
     opacity: 1;
-    color: #2f6b3a;
+    color: var(--color-success);
   }
 
   @media (hover: none) {
@@ -1142,6 +1232,20 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   border-color: #e3b8b8;
 }
 
+@media (prefers-color-scheme: dark) {
+  .contact-success {
+    color: #cde8cd;
+    background: #1e2c1f;
+    border-color: #3f5f40;
+  }
+
+  .contact-error {
+    color: #f4c9c9;
+    background: #361e1e;
+    border-color: #6e3838;
+  }
+}
+
 .form-field {
   display: flex;
   flex-direction: column;
@@ -1167,7 +1271,7 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   padding: 0.65rem 1.5rem;
   font: inherit;
   font-weight: 600;
-  color: #fff;
+  color: $color-on-accent;
   background: $color-accent;
   border: 0;
   border-radius: 0.5rem;
@@ -1244,7 +1348,7 @@ $diagram-modal-chrome: $diagram-modal-bar-height + 2 * $diagram-modal-padding;
   border-radius: $radius;
 
   &::backdrop {
-    background: rgb(36 26 16 / 70%);
+    background: var(--color-backdrop);
   }
 }
 

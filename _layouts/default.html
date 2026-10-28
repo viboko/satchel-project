@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  {%- comment -%} The header band's colour, for the browser's own toolbar where it takes one. {%- endcomment %}
+  <meta name="theme-color" content="#e8dcc8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#2c231b" media="(prefers-color-scheme: dark)">
 
   <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }} — {{ site.tagline }}{% endif %}</title>
   <meta name="description" content="{{ page.description | default: site.description | strip_html | strip_newlines }}">
