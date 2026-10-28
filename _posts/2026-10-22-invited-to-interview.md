@@ -11,9 +11,6 @@ Some very exciting news today: the ODI emailed to say that
 [Solid open call](/blog/2026-09-02-the-odi-solid-open-call/) has passed
 the first stage and gone through to the next round.
 
-> From the ODI's Solid team, 22nd October 2026
-> {: .email-excerpt__meta}
->
 > Dear Matthew,
 >
 > Thank you for applying to the Solid Social Good Open Call. I'm pleased to
@@ -22,9 +19,6 @@ the first stage and gone through to the next round.
 >
 > The next stage is a short technical interview. Its purpose is simply to
 > understand whether we can appropriately support your project.
->
-> The email continues
-> {: .email-excerpt__more}
 {: .email-excerpt}
 
 The email explains that it isn't a pitch, and applicants aren't competing

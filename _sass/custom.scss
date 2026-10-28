@@ -712,50 +712,17 @@ main {
   clear: both;
 }
 
-// An excerpt of an email quoted in a post: a narrow sheet of paper, with a
-// line saying who sent it, and a torn edge at the foot to show it carries on.
+// An excerpt of an email quoted in a post: a narrow card, set apart from
+// the post's own text.
 .page__content .email-excerpt {
   max-width: 34rem;
   margin: 2rem auto;
-  padding: 1.25rem 1.5rem 0;
+  padding: 0.25rem 1.5rem;
   background: $color-surface;
   border: 1px solid $color-border;
   border-left: 4px solid $color-accent;
   border-radius: 0.25rem;
   box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.95rem;
-}
-
-.email-excerpt__meta {
-  margin: 0 0 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid $color-border;
-  color: $color-text-muted;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.email-excerpt__more {
-  margin: 1rem -1.5rem 0;
-  padding: 0.75rem 1.5rem;
-  border-top: 2px dashed $color-border;
-  color: $color-text-muted;
-  font-style: italic;
-  font-size: 0.85rem;
-  text-align: center;
-
-  &::after {
-    content: " …";
-  }
 }
 
 // Inline code in posts.
