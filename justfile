@@ -68,9 +68,11 @@ check-pa11y-dark: build
 _pa11y config:
 	#!/usr/bin/env bash
 	set -euo pipefail
-	npx http-server _site -p 4001 -e html -s >/dev/null 2>&1 &
+	# Run the server directly rather than through npx, which on Linux leaves it
+	# running in a child process when killed, holding the port for the next run.
+	node_modules/.bin/http-server _site -p 4001 -e html -s >/dev/null 2>&1 &
 	server_pid=$!
-	trap 'kill "$server_pid" 2>/dev/null' EXIT
+	trap 'kill "$server_pid" 2>/dev/null || true' EXIT
 	for i in $(seq 1 30); do
 		curl -sf http://localhost:4001/sitemap.xml >/dev/null && break
 		sleep 1
