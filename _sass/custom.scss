@@ -582,11 +582,16 @@ main {
 }
 
 // Lists of posts: the latest few on the home page, and all of them on the
-// blog page. Each post has a brown bar down its left, and the whole post is
-// highlighted on hover rather than separated from the next by a rule, as on
-// the Gravesend Code Club blog. The highlight's colour depends on what the
-// list sits on, so the home page's card and the blog page set their own.
-$post-bar-width: 16px;
+// blog page. Each post has a light brown bar down its left, and the whole
+// post is highlighted on hover rather than separated from the next by a
+// rule, as on the Gravesend Code Club blog. The highlight's colour depends
+// on what the list sits on, so the home page's card and the blog page set
+// their own.
+$post-bar-width: 5px;
+$post-bar-gap: 1.25rem;
+
+// Between the accent brown and the border tan: there, but not heavy.
+$post-bar-color: #c09a74;
 $post-hover-padding: 1rem;
 
 .post-list {
@@ -617,7 +622,7 @@ $post-hover-padding: 1rem;
 
   article {
     position: relative;
-    padding-left: calc(#{$post-bar-width} + 0.75rem);
+    padding-left: calc(#{$post-bar-width} + #{$post-bar-gap});
 
     &::before {
       content: "";
@@ -626,8 +631,8 @@ $post-hover-padding: 1rem;
       bottom: 0;
       left: 0;
       width: $post-bar-width;
-      border-radius: 2px;
-      background: $color-accent;
+      border-radius: $post-bar-width;
+      background: $post-bar-color;
     }
   }
 }
