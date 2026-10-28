@@ -56,8 +56,16 @@ lint-seo: build
 	done < <(find _site -name "*.html")
 	echo "SEO checks passed"
 
-# Check accessibility (WCAG2AA) with pa11y against every page in the sitemap
+# Check accessibility (WCAG2AA) with pa11y against every page in the sitemap, in the light colour scheme
 check-pa11y: build
+	just _pa11y .pa11yci.json
+
+# Check accessibility (WCAG2AA) with pa11y against every page in the sitemap, in the dark colour scheme
+check-pa11y-dark: build
+	just _pa11y .pa11yci-dark.json
+
+# Run pa11y-ci with the given config against every page in the sitemap
+_pa11y config:
 	#!/usr/bin/env bash
 	set -euo pipefail
 	npx http-server _site -p 4001 -e html -s >/dev/null 2>&1 &
@@ -68,7 +76,7 @@ check-pa11y: build
 		sleep 1
 	done
 	site_url=$(grep -E '^url:' _config.yml | sed -E 's/^url:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/')
-	npx pa11y-ci \
+	npx pa11y-ci --config {{config}} \
 		--sitemap http://localhost:4001/sitemap.xml \
 		--sitemap-find "$site_url" --sitemap-replace http://localhost:4001 \
 		--sitemap-exclude '\.pdf$'
@@ -77,8 +85,8 @@ check-pa11y: build
 check-lighthouse: build
 	npx lhci autorun
 
-# Check accessibility (pa11y and Lighthouse) against every page of the built site
-check-accessibility: check-pa11y check-lighthouse
+# Check accessibility (pa11y, in both colour schemes, and Lighthouse) against every page of the built site
+check-accessibility: check-pa11y check-pa11y-dark check-lighthouse
 
 # Check Ruby gems for known vulnerabilities against the ruby-advisory-db
 check-bundler-audit:

@@ -7,7 +7,7 @@
       "numberOfRuns": 1,
       "settings": {
         "onlyCategories": ["accessibility"],
-        "chromeFlags": "--no-sandbox"
+        "chromeFlags": "--no-sandbox --blink-settings=preferredColorScheme=1"
       }
     },
     "assert": {
