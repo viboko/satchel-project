@@ -582,19 +582,53 @@ main {
 }
 
 // Lists of posts: the latest few on the home page, and all of them on the
-// blog page.
+// blog page. Each post has a brown bar down its left, and the whole post is
+// highlighted on hover rather than separated from the next by a rule, as on
+// the Gravesend Code Club blog. The highlight's colour depends on what the
+// list sits on, so the home page's card and the blog page set their own.
+$post-bar-width: 16px;
+$post-hover-padding: 1rem;
+
 .post-list {
+  --post-hover-bg: #{$color-band-bg};
+
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+// The padding and matching negative margin let the highlight reach past the
+// text without moving anything when the post isn't hovered.
 .post-list__item {
-  padding: 1.25rem 0;
-  border-bottom: 1px solid $color-border;
+  position: relative;
+  margin: 0 (-$post-hover-padding);
+  padding: $post-hover-padding;
+  border-radius: $radius;
+  transition: background-color 0.15s ease;
 
-  &:first-child {
-    padding-top: 0;
+  & + & {
+    margin-top: 0.25rem;
+  }
+
+  &:hover,
+  &:focus-within {
+    background-color: var(--post-hover-bg);
+  }
+
+  article {
+    position: relative;
+    padding-left: calc(#{$post-bar-width} + 0.75rem);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: $post-bar-width;
+      border-radius: 2px;
+      background: $color-accent;
+    }
   }
 }
 
@@ -606,9 +640,23 @@ main {
   a {
     text-decoration: none;
 
-    &:hover,
+    // Stretches the link over the whole post, highlight and all, so
+    // clicking anywhere in it opens the post. It's placed against the
+    // article, which sits inside the item's padding.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -$post-hover-padding;
+      border-radius: $radius;
+    }
+
     &:focus-visible {
-      text-decoration: underline;
+      outline: none;
+
+      &::after {
+        outline: 2px solid $color-accent;
+        outline-offset: 2px;
+      }
     }
   }
 }
@@ -634,6 +682,8 @@ main {
   box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
 
   .post-list {
+    --post-hover-bg: #{$color-bg};
+
     margin-bottom: 1.25rem;
   }
 }
@@ -643,10 +693,6 @@ main {
   font-size: 1.35rem;
 }
 
-.blog__intro {
-  margin: 0 0 2rem;
-  color: $color-text-muted;
-}
 
 .pagination {
   display: flex;
