@@ -18,6 +18,14 @@ $radius: 0.75rem;
 html {
   font-size: 100%;
 
+  // Phone browsers enlarge text they judge too small to read, which hits
+  // the code snippets hardest: their lines are wider than the screen, so
+  // the browser scales them up to well above the body text. The site sets
+  // its own sizes for phones, so keep text at the size the styles give it.
+  // Safari only knows the prefixed property.
+  -webkit-text-size-adjust: 100%; // stylelint-disable-line property-no-vendor-prefix
+  text-size-adjust: 100%;
+
   // The header/footer band colour, so mobile browsers' rubber-band
   // overscroll shows a continuation of the band above/below them,
   // rather than flashing white past the top or bottom of the page.
