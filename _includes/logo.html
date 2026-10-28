@@ -1,0 +1,8 @@
+{% comment %}
+  A logo set on its own, centred, between paragraphs of a post. `alt` names
+  the logo; `height` is its height in pixels (96 by default), set as a style
+  because the site's image rules size images from their width.
+{% endcomment %}
+<figure class="post-logo">
+  <img src="{{ include.src | relative_url }}" alt="{{ include.alt }}" style="--logo-height: {{ include.height | default: 96 }}px">
+</figure>

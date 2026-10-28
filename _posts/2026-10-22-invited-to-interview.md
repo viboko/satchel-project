@@ -11,20 +11,27 @@ Some very exciting news today: the ODI emailed to say that
 [Solid open call](/updates/2026-09-02-the-odi-solid-open-call/) has passed
 the first stage and gone through to the next round.
 
-```
-Dear Matthew, 
+> From the ODI's Solid team, 22nd October 2026
+> {: .email-excerpt__meta}
+>
+> Dear Matthew,
+>
+> Thank you for applying to the Solid Social Good Open Call. I'm pleased to
+> let you know that your application has been successful and has progressed
+> to the next round.
+>
+> The next stage is a short technical interview. Its purpose is simply to
+> understand whether we can appropriately support your project.
+>
+> The email continues
+> {: .email-excerpt__more}
+{: .email-excerpt}
 
-Thank you for applying to the Solid Social Good Open Call. I'm pleased to let you know that your application has been successful and has progressed to the next round.
+The email explains that it isn't a pitch, and applicants aren't competing
+against each other at this stage. It's a conversation to understand the
+project and whether the ODI can support it well: in the email's own words,
+"a conversation about what you'll need from us".
 
-The next stage is a short technical interview. Its purpose is simply to understand whether we can appropriately support your project.
-```
-
-The email explains that it isn't a pitch, and applicants aren't competing against each other
-at this stage. It's a conversation to understand the project and whether the
-ODI can support it well: in the email's own words, "a conversation about
-what you'll need from us".
-
-Between now and the
-interview I'll be working out exactly what I'd want from the ODI's
-engineers, its hosted Solid servers and its wider network. I'll also get a
-first working demo of Satchel ready to show.
+Between now and the interview I'll be working out exactly what I'd want from
+the ODI's engineers, its hosted Solid servers and its wider network. I'll
+also get a first working demo of Satchel ready to show.

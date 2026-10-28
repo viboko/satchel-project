@@ -16,7 +16,9 @@ contact:
   formspree_endpoint: "https://formspree.io/f/xwlpoanp"
 
 plugins:
+  - jekyll-feed
   - jekyll-paginate
+  - jekyll-redirect-from
   - jekyll-sitemap
 
 # Blog posts live at /updates/, where the first one was published, and are

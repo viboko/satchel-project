@@ -1,0 +1,23 @@
+<!doctype html>
+{%- comment -%}
+  jekyll-redirect-from builds its redirect pages with this layout when there
+  is one. Its own sends the browser to the live site's absolute URL, so a
+  local build's checks (Lighthouse) would follow it off to production; this
+  one stays on the same site. The canonical link still names the real page.
+{%- endcomment -%}
+{%- assign target = page.redirect.to | remove_first: site.url -%}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting…</title>
+  <link rel="canonical" href="{{ page.redirect.to }}">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="refresh" content="0; url={{ target }}">
+</head>
+<body>
+  <main>
+    <h1>Redirecting…</h1>
+    <p><a href="{{ target }}">Go to the page if you aren't redirected.</a></p>
+  </main>
+</body>
+</html>

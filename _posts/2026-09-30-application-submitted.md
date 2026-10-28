@@ -18,6 +18,8 @@ The project is called **Satchel** (a working title). It lets a child's
 [Solid Pod](/what-is-solid/), rather than living only inside whichever
 club, school or platform account they were made in.
 
+{% include logo.html src="/assets/images/satchel-logo.svg" alt="The Satchel logo, a leather satchel bag" height="120" %}
+
 On top of that sits a sharing dashboard, where the child and their guardian
 decide *together* who else can see each project, and either of them can take
 a share back at any time. That replaces Scratch's all-or-nothing "shared or

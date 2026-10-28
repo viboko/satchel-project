@@ -663,6 +663,75 @@ main {
   color: $color-text-muted;
 }
 
+// Letters of ordinal dates, such as the "th" of "28th", set by
+// _plugins/ordinal_superscript.rb. A line height of 0 stops them pushing
+// their line apart from the ones around it.
+.ordinal {
+  font-size: 0.65em;
+  line-height: 0;
+  vertical-align: super;
+}
+
+// A logo between paragraphs of a post, centred on its own.
+.post-logo {
+  margin: 2rem 0;
+
+  // Outranks the image rules of .page__content, which size from the width.
+  .page__content & img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: var(--logo-height, 6rem);
+    margin: 0 auto;
+  }
+}
+
+// An excerpt of an email quoted in a post: a narrow sheet of paper, with a
+// line saying who sent it, and a torn edge at the foot to show it carries on.
+.page__content .email-excerpt {
+  max-width: 34rem;
+  margin: 2rem auto;
+  padding: 1.25rem 1.5rem 0;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-left: 4px solid $color-accent;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+}
+
+.email-excerpt__meta {
+  margin: 0 0 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid $color-border;
+  color: $color-text-muted;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.email-excerpt__more {
+  margin: 1rem -1.5rem 0;
+  padding: 0.75rem 1.5rem;
+  border-top: 2px dashed $color-border;
+  color: $color-text-muted;
+  font-style: italic;
+  font-size: 0.85rem;
+  text-align: center;
+
+  &::after {
+    content: " …";
+  }
+}
+
 // Inline code in posts.
 .page__content code {
   padding: 0.1em 0.3em;
@@ -1074,6 +1143,13 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   color: $color-text-muted;
   font-size: 0.9rem;
   text-align: right;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem 1.5rem;
 }
 
 .footer-link {

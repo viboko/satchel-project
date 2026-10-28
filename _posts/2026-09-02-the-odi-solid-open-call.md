@@ -23,6 +23,8 @@ incubated by the W3C Solid Community Group, and is being standardised by the
 Linked Web Storage Working Group. There's more on this site's
 [What is Solid?](/what-is-solid/) page.
 
+{% include logo.html src="/assets/images/solid-logo.svg" alt="The Solid logo" %}
+
 **Who can apply.** Only non-commercial projects: non-profits, charities,
 academic institutions, civil society groups and individuals. Projects that
 aim to make a profit from Solid aren't eligible. No prior Solid experience
@@ -72,8 +74,16 @@ likelihood of success. The ODI checks eligibility first.
 
 I run a local [Code Club](https://codeclub.org/en/){:target="_blank" rel="noopener"},
 where children learn to code, mostly with
-[Scratch](https://scratch.mit.edu/){:target="_blank" rel="noopener"}. Our club's site is here: [gravesend-code-club.viboko.dev](https://gravesend-code-club.viboko.dev/){:target="_blank" rel="noopener"}.
+[Scratch](https://scratch.mit.edu/){:target="_blank" rel="noopener"}. Our
+club's site is here:
+[gravesend-code-club.viboko.dev](https://gravesend-code-club.viboko.dev/){:target="_blank" rel="noopener"}.
 
-I would like to explore the possibility of modifying Scratch to add the ability to store projects to a Solid pod. As it stands the permissions and consent model used by Scratch is fairly primitive. A child's projects could live in a Pod
-of their own, and the child and their parents could decide who gets to see
-them. It feels like there is plenty of potential! My plan is to spend some time investigating and try to get an application together... watch this space! 
+{% include logo.html src="/assets/images/code-club-logo.png" alt="The Code Club logo" %}
+
+I would like to explore the possibility of modifying Scratch to add the
+ability to store projects to a Solid pod. As it stands the permissions and
+consent model used by Scratch is fairly primitive. A child's projects could
+live in a Pod of their own, and the child and their parents could decide who
+gets to see them. It feels like there is plenty of potential! My plan is to
+spend some time investigating and try to get an application together...
+watch this space!

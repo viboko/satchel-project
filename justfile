@@ -43,6 +43,8 @@ lint-seo: build
 	test -f _site/sitemap.xml || { echo "missing _site/sitemap.xml"; exit 1; }
 	ruby -rrexml/document -e "REXML::Document.new(File.read('_site/sitemap.xml'))"
 	while IFS= read -r f; do
+		# jekyll-redirect-from's pages only send the browser on to the real one.
+		grep -q 'http-equiv="refresh"' "$f" && continue
 		grep -oE 'property="og:url" content="[^"]*"' "$f" | grep -q 'content="https://' \
 			|| { echo "$f: og:url is missing or not an absolute https URL"; exit 1; }
 		grep -oE 'rel="canonical" href="[^"]*"' "$f" | grep -q 'href="https://' \
