@@ -13,12 +13,12 @@ ahead of today's deadline. You can read
 
 ## The idea
 
+{% include logo.html src="/assets/images/satchel-logo.svg" alt="The Satchel logo, a leather satchel bag" height="120" %}
+
 The project is called **Satchel** (a working title). It lets a child's
 [Scratch](/what-is-scratch/) projects be saved to their own
 [Solid Pod](/what-is-solid/), rather than living only inside whichever
 club, school or platform account they were made in.
-
-{% include logo.html src="/assets/images/satchel-logo.svg" alt="The Satchel logo, a leather satchel bag" height="120" %}
 
 On top of that sits a sharing dashboard, where the child and their guardian
 decide *together* who else can see each project, and either of them can take

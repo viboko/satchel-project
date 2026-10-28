@@ -672,9 +672,10 @@ main {
   vertical-align: super;
 }
 
-// A logo between paragraphs of a post, centred on its own.
+// A logo floated right, with the paragraph after it wrapping round it.
 .post-logo {
-  margin: 2rem 0;
+  float: right;
+  margin: 0.25rem 0 1rem 1.5rem;
 
   // Outranks the image rules of .page__content, which size from the width.
   .page__content & img {
@@ -682,8 +683,24 @@ main {
     width: auto;
     max-width: 100%;
     height: var(--logo-height, 6rem);
-    margin: 0 auto;
+    margin: 0;
   }
+}
+
+// On a phone, smaller logos leave the text beside them room for a few words.
+@media (width < 30rem) {
+  .post-logo {
+    margin-left: 1rem;
+
+    .page__content & img {
+      height: calc(var(--logo-height, 6rem) * 0.65);
+    }
+  }
+}
+
+// A section heading starts below a logo floated in the section before it.
+.post .page__content h2 {
+  clear: both;
 }
 
 // An excerpt of an email quoted in a post: a narrow sheet of paper, with a

@@ -15,6 +15,8 @@ Solid for social good, and to support each of them for six months.
 
 ## The call in brief
 
+{% include logo.html src="/assets/images/solid-logo.svg" alt="The Solid logo" %}
+
 **What Solid is.** Solid is an open standard for digital identity and
 personal data. Instead of every app keeping its own copy of your data, you
 keep it in a personal online data store, a *Pod*, and decide which apps and
@@ -22,8 +24,6 @@ people can use it. It came out of Sir Tim Berners-Lee's lab at MIT, is
 incubated by the W3C Solid Community Group, and is being standardised by the
 Linked Web Storage Working Group. There's more on this site's
 [What is Solid?](/what-is-solid/) page.
-
-{% include logo.html src="/assets/images/solid-logo.svg" alt="The Solid logo" %}
 
 **Who can apply.** Only non-commercial projects: non-profits, charities,
 academic institutions, civil society groups and individuals. Projects that
@@ -72,13 +72,13 @@ likelihood of success. The ODI checks eligibility first.
 
 ## What I'd like to do
 
+{% include logo.html src="/assets/images/code-club-logo.svg" alt="The Code Club logo" %}
+
 I run a local [Code Club](https://codeclub.org/en/){:target="_blank" rel="noopener"},
 where children learn to code, mostly with
 [Scratch](https://scratch.mit.edu/){:target="_blank" rel="noopener"}. Our
 club's site is here:
 [gravesend-code-club.viboko.dev](https://gravesend-code-club.viboko.dev/){:target="_blank" rel="noopener"}.
-
-{% include logo.html src="/assets/images/code-club-logo.png" alt="The Code Club logo" %}
 
 I would like to explore the possibility of modifying Scratch to add the
 ability to store projects to a Solid pod. As it stands the permissions and
