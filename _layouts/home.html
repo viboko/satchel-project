@@ -6,6 +6,15 @@ layout: default
     {{ content }}
   </div>
 
+  <section class="latest" aria-labelledby="latest-title">
+    <h2 id="latest-title" class="latest__title">Latest from the blog</h2>
+    {% assign latest_posts = site.posts | slice: 0, 3 %}
+    {% include post-list.html posts=latest_posts heading="h3" %}
+    <a class="callout__link" href="{{ '/blog/' | relative_url }}">
+      All posts <span aria-hidden="true">&rarr;</span>
+    </a>
+  </section>
+
   <div class="callouts">
     {% for section in site.data.sections %}
       {% include callout.html section=section %}
@@ -15,7 +24,7 @@ layout: default
   <div class="application">
     <h2 class="application__title">Why this exists</h2>
     <p>
-      Satchel is a proposal in response to the Open Data Institute's
+      Satchel is one of the projects selected for the Open Data Institute's
       <a href="https://theodi.org/news-and-events/blog/solid-open-call/" target="_blank" rel="noopener">Solid use case open call</a>,
       which offers in-kind support to non-commercial projects using Solid for
       social good.

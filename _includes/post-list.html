@@ -1,0 +1,23 @@
+{% comment %}
+  A list of posts, newest first as given: each with its date, title and
+  description. `heading` is the level of the titles (h2 by default), so the
+  list fits under whatever heading the page puts above it.
+{% endcomment %}
+{% assign heading = include.heading | default: 'h2' %}
+<ol class="post-list">
+  {% for post in include.posts %}
+    <li class="post-list__item">
+      <article>
+        <{{ heading }} class="post-list__title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </{{ heading }}>
+        <p class="post-list__date">
+          <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date_to_long_string: 'ordinal', 'UK' }}</time>
+        </p>
+        {% if post.description %}
+          <p class="post-list__summary">{{ post.description }}</p>
+        {% endif %}
+      </article>
+    </li>
+  {% endfor %}
+</ol>

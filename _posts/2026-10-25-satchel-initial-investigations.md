@@ -5,11 +5,6 @@ description: >-
   Where Satchel stands in October 2026: a first working prototype that saves
   a Scratch project to a Solid Pod, how it's built, what it doesn't do yet,
   what comes next, and where the ODI could help.
-permalink: /updates/2026-10-25-satchel-initial-investigations/
-# Shared directly ahead of the ODI interview: not linked from the rest of the
-# site, left out of the sitemap, and asking search engines not to index it.
-noindex: true
-sitemap: false
 # Where the code snippets are quoted from: the fork's initial-investigations
 # tag, so their line numbers and links stay accurate.
 code_source:

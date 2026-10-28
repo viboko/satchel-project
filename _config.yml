@@ -16,7 +16,20 @@ contact:
   formspree_endpoint: "https://formspree.io/f/xwlpoanp"
 
 plugins:
+  - jekyll-paginate
   - jekyll-sitemap
+
+# Blog posts live at /updates/, where the first one was published, and are
+# listed, newest first, at /blog/ (blog/index.html), ten to a page.
+permalink: /updates/:year-:month-:day-:title/
+paginate: 10
+paginate_path: /blog/page:num/
+
+defaults:
+  - scope:
+      type: posts
+    values:
+      layout: post
 
 markdown: kramdown
 

@@ -103,6 +103,11 @@ img {
 }
 
 .site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
   padding-top: 1.75rem;
   padding-bottom: 1.25rem;
 }
@@ -139,6 +144,32 @@ img {
 .site-header__tagline {
   font-size: 0.95rem;
   color: $color-text-muted;
+}
+
+.site-nav__list {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav__link {
+  color: $color-text;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 0.2rem;
+
+  &:visited {
+    color: $color-text;
+  }
+
+  &:hover,
+  &:focus-visible,
+  &[aria-current] {
+    border-bottom-color: $color-accent;
+  }
 }
 
 // Main content
@@ -498,6 +529,138 @@ main {
   font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+// Previous and next post, side by side at the foot of a post.
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $color-border;
+}
+
+@media (width >= 48rem) {
+  .post-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .post-nav__link--next {
+    grid-column: 2;
+    text-align: right;
+  }
+}
+
+.post-nav__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-decoration: none;
+
+  &:hover .post-nav__title,
+  &:focus-visible .post-nav__title {
+    text-decoration: underline;
+  }
+}
+
+.post-nav__label {
+  color: $color-text-muted;
+  font-size: 0.9rem;
+}
+
+.post-nav__title {
+  font-weight: 600;
+}
+
+// Lists of posts: the latest few on the home page, and all of them on the
+// blog page.
+.post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-list__item {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid $color-border;
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+.post-list__title {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+
+  a {
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
+  }
+}
+
+.post-list__date {
+  margin: 0.25rem 0 0;
+  color: $color-accent;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.post-list__summary {
+  margin: 0.5rem 0 0;
+  color: $color-text-muted;
+}
+
+// The latest posts on the home page: a card like the callouts below it.
+.latest {
+  padding: 1.5rem;
+  background: $color-surface;
+  border: 2px solid $color-border;
+  border-radius: $radius;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
+
+  .post-list {
+    margin-bottom: 1.25rem;
+  }
+}
+
+.latest__title {
+  margin: 0 0 1.25rem;
+  font-size: 1.35rem;
+}
+
+.blog__intro {
+  margin: 0 0 2rem;
+  color: $color-text-muted;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination__link {
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.pagination__status {
+  color: $color-text-muted;
 }
 
 // Inline code in posts.

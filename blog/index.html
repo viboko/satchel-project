@@ -1,0 +1,36 @@
+---
+layout: default
+title: Blog
+description: >-
+  News and progress updates from Satchel, from the ODI's Solid open call
+  onwards, newest first.
+---
+{% comment %}
+  jekyll-paginate builds this page once for every ten posts: /blog/, then
+  /blog/page2/ and so on (paginate and paginate_path in _config.yml). It
+  only paginates a file called index.html, which is why this isn't in pages/.
+{% endcomment %}
+<div class="page blog">
+  <h1 class="page__title">Blog</h1>
+  <p class="blog__intro">
+    News and progress updates from Satchel, newest first.
+  </p>
+
+  {% include post-list.html posts=paginator.posts %}
+
+  {% if paginator.total_pages > 1 %}
+    <nav class="pagination" aria-label="Blog pages">
+      {% if paginator.previous_page %}
+        <a class="pagination__link" href="{{ paginator.previous_page_path | relative_url }}" rel="prev">
+          <span aria-hidden="true">&larr;</span> Newer posts
+        </a>
+      {% endif %}
+      <span class="pagination__status">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+      {% if paginator.next_page %}
+        <a class="pagination__link" href="{{ paginator.next_page_path | relative_url }}" rel="next">
+          Older posts <span aria-hidden="true">&rarr;</span>
+        </a>
+      {% endif %}
+    </nav>
+  {% endif %}
+</div>

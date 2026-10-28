@@ -1,3 +1,6 @@
+{%- comment -%} The blog's later pages and every post count as being in the blog. {%- endcomment -%}
+{%- assign in_blog = false -%}
+{%- if page.url contains '/blog/' or page.collection == 'posts' -%}{%- assign in_blog = true -%}{%- endif -%}
 <header class="site-header">
   <div class="site-header__inner container">
     <a class="site-header__brand" href="{{ '/' | relative_url }}">
@@ -7,5 +10,11 @@
         <span class="site-header__tagline">{{ site.tagline }}</span>
       </span>
     </a>
+    <nav class="site-nav" aria-label="Site">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Overview</a></li>
+        <li><a class="site-nav__link" href="{{ '/blog/' | relative_url }}"{% if page.url == '/blog/' %} aria-current="page"{% elsif in_blog %} aria-current="true"{% endif %}>Blog</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
