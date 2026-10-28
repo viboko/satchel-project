@@ -7,7 +7,7 @@ description: >-
 ---
 
 I've submitted my application to the
-[ODI's Solid open call](/updates/2026-09-02-the-odi-solid-open-call/), just
+[ODI's Solid open call](/blog/2026-09-02-the-odi-solid-open-call/), just
 ahead of today's deadline. You can read
 [the whole application](/application/) on this site.
 

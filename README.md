@@ -10,7 +10,7 @@ Live at <https://satchel.viboko.dev>.
 Page content lives in `pages/`; each page sets its own `permalink`.
 
 Blog posts live in `_posts/`, named `YYYY-MM-DD-slug.md`, and are published
-at `/updates/YYYY-MM-DD-slug/`. They're listed newest first at `/blog/`
+at `/blog/YYYY-MM-DD-slug/`. They're listed newest first at `/blog/`
 (`blog/index.html`, paginated by `jekyll-paginate`), and the three latest
 also appear on the home page.
 

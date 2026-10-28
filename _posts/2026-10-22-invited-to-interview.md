@@ -8,7 +8,7 @@ description: >-
 
 Some very exciting news today: the ODI emailed to say that
 [my application](/application/) to the
-[Solid open call](/updates/2026-09-02-the-odi-solid-open-call/) has passed
+[Solid open call](/blog/2026-09-02-the-odi-solid-open-call/) has passed
 the first stage and gone through to the next round.
 
 > From the ODI's Solid team, 22nd October 2026
