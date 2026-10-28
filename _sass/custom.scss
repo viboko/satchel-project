@@ -682,18 +682,19 @@ main {
     display: block;
     width: auto;
     max-width: 100%;
-    height: var(--logo-height, 6rem);
+    height: var(--logo-height, 10.625rem);
     margin: 0;
   }
 }
 
-// On a phone, smaller logos leave the text beside them room for a few words.
+// On a phone, logos at half size leave the text beside them room for a few
+// words.
 @media (width < 30rem) {
   .post-logo {
     margin-left: 1rem;
 
     .page__content & img {
-      height: calc(var(--logo-height, 6rem) * 0.65);
+      height: calc(var(--logo-height, 10.625rem) * 0.5);
     }
   }
 }

@@ -1,9 +1,9 @@
 {% comment %}
   A logo floated to the right of the paragraph that follows it in a post,
   so the paragraph's text wraps around it. `alt` names the logo; `height` is
-  its height in pixels (96 by default), set as a style because the site's
+  its height in pixels (170 by default), set as a style because the site's
   image rules size images from their width.
 {% endcomment %}
 <figure class="post-logo">
-  <img src="{{ include.src | relative_url }}" alt="{{ include.alt }}" style="--logo-height: {{ include.height | default: 96 }}px">
+  <img src="{{ include.src | relative_url }}" alt="{{ include.alt }}" style="--logo-height: {{ include.height | default: 170 }}px">
 </figure>

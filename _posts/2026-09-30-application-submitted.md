@@ -13,7 +13,7 @@ ahead of today's deadline. You can read
 
 ## The idea
 
-{% include logo.html src="/assets/images/satchel-logo.svg" alt="The Satchel logo, a leather satchel bag" height="120" %}
+{% include logo.html src="/assets/images/satchel-logo.svg" alt="The Satchel logo, a leather satchel bag" height="210" %}
 
 The project is called **Satchel** (a working title). It lets a child's
 [Scratch](/what-is-scratch/) projects be saved to their own
