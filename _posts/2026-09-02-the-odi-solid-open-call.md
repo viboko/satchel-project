@@ -13,9 +13,6 @@ to speed up the adoption of [Solid](https://solidproject.org/){:target="_blank" 
 among non-commercial organisations. It plans to pick six projects that use
 Solid for social good, and to support each of them for six months.
 
-I'd like to apply. The rest of this post sums up the call, in case the
-original page moves, and then says what I have in mind.
-
 ## The call in brief
 
 **What Solid is.** Solid is an open standard for digital identity and
@@ -42,12 +39,12 @@ likelihood of success. The ODI checks eligibility first.
 
 | Date | Milestone |
 | - | - |
-| 1 September | Applications open |
-| 15 September | Solid World, with more about the call |
-| 30 September, 17:00 BST | Applications close |
-| 1–16 October | Judging |
-| 19–30 October | Interviews |
-| 2 November | Six months of work begin, ending 30 April 2027 |
+| 1st September | Applications open |
+| 15th September | Solid World, with more about the call |
+| 30th September, 17:00 BST | Applications close |
+| 1st–16th October | Judging |
+| 19th–30th October | Interviews |
+| 2nd November | Six months of work begin, ending 30th April 2027 |
 
 **What selected projects get.**
 
@@ -75,12 +72,8 @@ likelihood of success. The ODI checks eligibility first.
 
 I run a local [Code Club](https://codeclub.org/en/){:target="_blank" rel="noopener"},
 where children learn to code, mostly with
-[Scratch](https://scratch.mit.edu/){:target="_blank" rel="noopener"}. One
-thing that keeps coming up is how tied a child's projects are to wherever
-they happened to make them: a club laptop, a school account, a platform's
-login. Their work rarely follows them.
+[Scratch](https://scratch.mit.edu/){:target="_blank" rel="noopener"}. Our club's site is here: [gravesend-code-club.viboko.dev](https://gravesend-code-club.viboko.dev/){:target="_blank" rel="noopener"}.
 
-Solid looks like a good fit for that. A child's projects could live in a Pod
+I would like to explore the possibility of modifying Scratch to add the ability to store projects to a Solid pod. As it stands the permissions and consent model used by Scratch is fairly primitive. A child's projects could live in a Pod
 of their own, and the child and their parents could decide who gets to see
-them. I'm going to spend the next few weeks reading up on Solid and shaping
-this into an application.
+them. It feels like there is plenty of potential! My plan is to spend some time investigating and try to get an application together... watch this space! 

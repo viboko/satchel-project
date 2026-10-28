@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Satchel: Initial investigations"
+title: "Initial investigations"
 description: >-
   Where Satchel stands in October 2026: a first working prototype that saves
   a Scratch project to a Solid Pod, how it's built, what it doesn't do yet,
@@ -11,6 +11,8 @@ code_source:
   repo: viboko/scratch-editor
   ref: initial-investigations
 ---
+
+I have an initial working proof-of-concept with demonstrates saving a Scratch project to a Solid pod.
 
 <!-- Code snippets and the video, diagram and collapsed section are HTML, or look
      like it to markdownlint, and the code inside a code_snippet tag looks

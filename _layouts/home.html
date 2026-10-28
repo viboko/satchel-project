@@ -7,7 +7,7 @@ layout: default
   </div>
 
   <section class="latest" aria-labelledby="latest-title">
-    <h2 id="latest-title" class="latest__title">Latest from the blog</h2>
+    <h2 id="latest-title" class="latest__title">Blog</h2>
     {% assign latest_posts = site.posts | slice: 0, 3 %}
     {% include post-list.html posts=latest_posts heading="h3" %}
     <a class="callout__link" href="{{ '/blog/' | relative_url }}">

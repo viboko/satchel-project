@@ -30,7 +30,7 @@ Scratch is the concrete starting point, but the pattern underneath is meant
 to be more general: a child's own, portable store of their learning work,
 controlled by them and their family. [Beyond Scratch](/beyond-scratch/)
 covers that, and [How this differs from previous attempts](/how-this-differs/)
-explains why earlier learner-record projects struggled where Solid might not.
+explains why earlier learner-record projects struggled where Satchel might not.
 
 ## What I asked for
 
@@ -43,5 +43,5 @@ answer in Solid yet.
 
 ## What happens next
 
-Judging runs from 1 to 16 October, with interviews between 19 and 30
-October. Fingers crossed.
+Judging runs from 1st to 16th October, with interviews between 19th and 30th
+October. Fingers crossed! 🤞
