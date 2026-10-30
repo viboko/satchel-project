@@ -1,5 +1,7 @@
 // Renders the page's mermaid diagrams, then lets each one be opened full
 // size in a modal dialog, since many render too small to read in the page.
+// The diagrams take the colours of the system's light or dark scheme, and are
+// rendered again if it changes while the page is open.
 (() => {
   // Mermaid gives some shapes (e.g. sequence-diagram actor figures) ids
   // that aren't unique, even within one diagram. Nothing refers to them, so
@@ -85,19 +87,9 @@
     });
 
     diagrams.forEach((diagram) => {
-      // Make the diagram itself a button, for keyboard users. A button's
-      // content is hidden from assistive tech, so label it with the
-      // diagram's title and description.
-      const svg = diagram.querySelector("svg");
-      const title = svg && svg.querySelector("title");
-      const desc = svg && svg.querySelector("desc");
+      // Make the diagram itself a button, for keyboard users.
       diagram.tabIndex = 0;
       diagram.setAttribute("role", "button");
-      diagram.setAttribute(
-        "aria-label",
-        title ? `Enlarge diagram: ${title.textContent}` : "Enlarge diagram",
-      );
-      if (desc && desc.id) diagram.setAttribute("aria-describedby", desc.id);
       diagram.addEventListener("keydown", (event) => {
         if (event.key !== "Enter" && event.key !== " ") return;
         event.preventDefault();
@@ -107,14 +99,53 @@
       diagram.classList.add("mermaid--expandable");
       diagram.addEventListener("click", () => open(diagram));
     });
+
+    return { close: () => dialog.open && close() };
+  };
+
+  // A button's content is hidden from assistive tech, so label each diagram
+  // with its title and description. Done after every render, since the
+  // description's id changes.
+  const label = (diagram) => {
+    const svg = diagram.querySelector("svg");
+    const title = svg && svg.querySelector("title");
+    const desc = svg && svg.querySelector("desc");
+    diagram.setAttribute(
+      "aria-label",
+      title ? `Enlarge diagram: ${title.textContent}` : "Enlarge diagram",
+    );
+    if (desc && desc.id) diagram.setAttribute("aria-describedby", desc.id);
+    else diagram.removeAttribute("aria-describedby");
   };
 
   document.addEventListener("DOMContentLoaded", async () => {
     const diagrams = Array.from(document.querySelectorAll(".mermaid"));
     if (diagrams.length === 0 || !window.mermaid) return;
 
-    await window.mermaid.run({ nodes: diagrams });
-    dedupeIds(diagrams.map((diagram) => diagram.querySelector("svg")).filter(Boolean));
-    setUp(diagrams);
+    // Mermaid replaces each diagram's source with the svg, so keep the
+    // sources to render from again.
+    const sources = new Map(diagrams.map((diagram) => [diagram, diagram.textContent]));
+    const dark = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const render = async () => {
+      diagrams.forEach((diagram) => {
+        diagram.removeAttribute("data-processed");
+        diagram.textContent = sources.get(diagram);
+      });
+      window.mermaid.initialize(window.mermaidConfig(dark.matches));
+      await window.mermaid.run({ nodes: diagrams });
+      dedupeIds(diagrams.map((diagram) => diagram.querySelector("svg")).filter(Boolean));
+      diagrams.forEach(label);
+    };
+
+    await render();
+    const modal = setUp(diagrams);
+
+    dark.addEventListener("change", () => {
+      // The open diagram's svg is in the dialog; put it back before it's
+      // replaced.
+      modal.close();
+      render();
+    });
   });
 })();

@@ -9,6 +9,11 @@ Live at <https://satchel.viboko.dev>.
 
 Page content lives in `pages/`; each page sets its own `permalink`.
 
+Blog posts live in `_posts/`, named `YYYY-MM-DD-slug.md`, and are published
+at `/blog/YYYY-MM-DD-slug/`. They're listed newest first at `/blog/`
+(`blog/index.html`, paginated by `jekyll-paginate`), and the three latest
+also appear on the home page.
+
 ## Running locally
 
 Install dependencies:
@@ -57,6 +62,13 @@ just check-accessibility
 Checks accessibility with `pa11y-ci` (WCAG2AA, against every page in the
 sitemap) and Lighthouse. Both build the site and serve it locally to run
 against.
+
+The site follows the visitor's light or dark setting, so pa11y runs twice:
+`just check-pa11y` in the light colour scheme and `just check-pa11y-dark`
+in the dark one, with configs `.pa11yci.json` and `.pa11yci-dark.json`.
+Each pins the scheme with Chrome's `--blink-settings=preferredColorScheme`
+flag, as does `.lighthouserc.json` (light), since otherwise headless Chrome
+follows the machine's own appearance.
 
 If `just check-pa11y` fails locally with a Chrome `dlopen` error, the
 Chrome build that `pa11y-ci`'s Puppeteer dependency downloaded is corrupt -

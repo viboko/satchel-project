@@ -3,7 +3,7 @@
     "standard": "WCAG2AA",
     "timeout": 30000,
     "chromeLaunchConfig": {
-      "args": ["--no-sandbox"]
+      "args": ["--no-sandbox", "--blink-settings=preferredColorScheme=1"]
     }
   }
 }

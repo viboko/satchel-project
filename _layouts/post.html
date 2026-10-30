@@ -10,4 +10,21 @@ layout: default
   <div class="page__content">
     {{ content }}
   </div>
+
+  {% if page.previous or page.next %}
+    <nav class="post-nav" aria-label="More posts">
+      {% if page.previous %}
+        <a class="post-nav__link post-nav__link--previous" href="{{ page.previous.url | relative_url }}" rel="prev">
+          <span class="post-nav__label"><span aria-hidden="true">&larr;</span> Previous post</span>
+          <span class="post-nav__title">{{ page.previous.title }}</span>
+        </a>
+      {% endif %}
+      {% if page.next %}
+        <a class="post-nav__link post-nav__link--next" href="{{ page.next.url | relative_url }}" rel="next">
+          <span class="post-nav__label">Next post <span aria-hidden="true">&rarr;</span></span>
+          <span class="post-nav__title">{{ page.next.title }}</span>
+        </a>
+      {% endif %}
+    </nav>
+  {% endif %}
 </article>

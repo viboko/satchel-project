@@ -1,13 +1,75 @@
-// Palette drawn from the satchel logo (leather brown / near-black).
-$color-text: #241a10;
-$color-text-muted: #5a4a3c;
-$color-link: #6b3a1e;
-$color-link-visited: #4f2b16;
-$color-accent: #8a4a26;
-$color-border: #ddcbb0;
-$color-bg: #f6f0e7;
-$color-surface: #fff;
-$color-band-bg: #e8dcc8;
+// Palette drawn from the satchel logo (leather brown / near-black), as
+// custom properties, so the dark set below can replace it when the
+// visitor's system asks for dark mode. Every text colour keeps at least AA
+// contrast against each background it sits on, in both sets.
+:root {
+  color-scheme: light dark;
+
+  --color-text: #241a10;
+  --color-text-muted: #5a4a3c;
+  --color-link: #6b3a1e;
+  --color-link-visited: #4f2b16;
+  --color-accent: #8a4a26;
+  --color-on-accent: #fff; // Text on an accent-coloured background
+  --color-border: #ddcbb0;
+  --color-bg: #f6f0e7;
+  --color-surface: #fff;
+  --color-band-bg: #e8dcc8;
+  --color-error: #a4201a;
+  --color-success: #2f6b3a;
+  --color-backdrop: rgb(36 26 16 / 70%);
+  --post-bar-color: #a5724d; // Beside each post in the post lists
+
+  // Syntax highlighting in code snippets.
+  --code-gutter-bg: #faf6f0;
+  --code-hover-bg: #f3ebdd;
+  --code-number: #7a6a5c;
+  --code-keyword: #a8321c;
+  --code-constant: #1f5a8a;
+  --code-function: #6b3fa0;
+  --code-type: #0f6a6a;
+  --code-attribute: #8a5a00;
+  --code-string: #2f6b3a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #f0e6d8;
+    --color-text-muted: #c2b19e;
+    --color-link: #eba77a;
+    --color-link-visited: #d9a88a;
+    --color-accent: #dc9563;
+    --color-on-accent: #1b1511;
+    --color-border: #4d3d2f;
+    --color-bg: #1b1511;
+    --color-surface: #251d17;
+    --color-band-bg: #2c231b;
+    --color-error: #ff9a8a;
+    --color-success: #96d196;
+    --color-backdrop: rgb(0 0 0 / 75%);
+    --post-bar-color: #b98059;
+    --code-gutter-bg: #201913;
+    --code-hover-bg: #30261d;
+    --code-number: #a29180;
+    --code-keyword: #f4927a;
+    --code-constant: #86bdf0;
+    --code-function: #c9a3f0;
+    --code-type: #6fcdc6;
+    --code-attribute: #e6bb68;
+    --code-string: #96d196;
+  }
+}
+
+$color-text: var(--color-text);
+$color-text-muted: var(--color-text-muted);
+$color-link: var(--color-link);
+$color-link-visited: var(--color-link-visited);
+$color-accent: var(--color-accent);
+$color-on-accent: var(--color-on-accent);
+$color-border: var(--color-border);
+$color-bg: var(--color-bg);
+$color-surface: var(--color-surface);
+$color-band-bg: var(--color-band-bg);
 $max-width-page: 64rem;
 $radius: 0.75rem;
 
@@ -17,6 +79,14 @@ $radius: 0.75rem;
 
 html {
   font-size: 100%;
+
+  // Phone browsers enlarge text they judge too small to read, which hits
+  // the code snippets hardest: their lines are wider than the screen, so
+  // the browser scales them up to well above the body text. The site sets
+  // its own sizes for phones, so keep text at the size the styles give it.
+  // Safari only knows the prefixed property.
+  -webkit-text-size-adjust: 100%; // stylelint-disable-line property-no-vendor-prefix
+  text-size-adjust: 100%;
 
   // The header/footer band colour, so mobile browsers' rubber-band
   // overscroll shows a continuation of the band above/below them,
@@ -59,7 +129,7 @@ body {
   z-index: 100;
   padding: 0.5rem 1rem;
   background: $color-accent;
-  color: #fff;
+  color: $color-on-accent;
   border-radius: 0 0 $radius $radius;
   transition: top 0.15s ease-in-out;
 
@@ -103,6 +173,11 @@ img {
 }
 
 .site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
   padding-top: 1.75rem;
   padding-bottom: 1.25rem;
 }
@@ -139,6 +214,32 @@ img {
 .site-header__tagline {
   font-size: 0.95rem;
   color: $color-text-muted;
+}
+
+.site-nav__list {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav__link {
+  color: $color-text;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 0.2rem;
+
+  &:visited {
+    color: $color-text;
+  }
+
+  &:hover,
+  &:focus-visible,
+  &[aria-current] {
+    border-bottom-color: $color-accent;
+  }
 }
 
 // Main content
@@ -272,7 +373,7 @@ main {
 
 // Set by word-count.js when an answer is over its limit.
 .word-count--over {
-  color: #a4201a;
+  color: var(--color-error);
   font-weight: 700;
 }
 
@@ -371,7 +472,7 @@ main {
     width: 1.6rem;
     height: 1.6rem;
     background: var(--built-accent);
-    color: #fff;
+    color: $color-on-accent;
     font-size: 0.85rem;
     font-weight: 700;
     border-radius: 50%;
@@ -405,6 +506,34 @@ main {
   &:nth-child(5) {
     --built-tint: #e3e5e8;
     --built-accent: #495364;
+  }
+
+  // Dark tints and light accents, so the numbers, in the background's
+  // colour, still read on the accents.
+  @media (prefers-color-scheme: dark) {
+    &:nth-child(1) {
+      --built-tint: #1f2b29;
+      --built-accent: #8db5ad;
+    }
+
+    &:nth-child(2) {
+      --built-tint: #33251a;
+    }
+
+    &:nth-child(3) {
+      --built-tint: #232b1c;
+      --built-accent: #a3bb84;
+    }
+
+    &:nth-child(4) {
+      --built-tint: #2f2227;
+      --built-accent: #c896aa;
+    }
+
+    &:nth-child(5) {
+      --built-tint: #22262d;
+      --built-accent: #9eaac0;
+    }
   }
 }
 
@@ -500,6 +629,245 @@ main {
   letter-spacing: 0.02em;
 }
 
+// Previous and next post, side by side at the foot of a post.
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $color-border;
+}
+
+@media (width >= 48rem) {
+  .post-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .post-nav__link--next {
+    grid-column: 2;
+    text-align: right;
+  }
+}
+
+.post-nav__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-decoration: none;
+
+  &:hover .post-nav__title,
+  &:focus-visible .post-nav__title {
+    text-decoration: underline;
+  }
+}
+
+.post-nav__label {
+  color: $color-text-muted;
+  font-size: 0.9rem;
+}
+
+.post-nav__title {
+  font-weight: 600;
+}
+
+// Lists of posts: the latest few on the home page, and all of them on the
+// blog page. Each post has a light brown bar down its left, and the whole
+// post is highlighted on hover rather than separated from the next by a
+// rule, as on the Gravesend Code Club blog. The highlight's colour depends
+// on what the list sits on, so the home page's card and the blog page set
+// their own.
+$post-bar-width: 9px;
+$post-bar-gap: 1.25rem;
+
+// Between the accent brown and the border tan: there, but not heavy.
+$post-bar-color: var(--post-bar-color);
+$post-hover-padding: 1rem;
+
+.post-list {
+  --post-hover-bg: #{$color-band-bg};
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// The padding and matching negative margin let the highlight reach past the
+// text without moving anything when the post isn't hovered.
+.post-list__item {
+  position: relative;
+  margin: 0 (-$post-hover-padding);
+  padding: $post-hover-padding;
+  border-radius: $radius;
+  transition: background-color 0.15s ease;
+
+  & + & {
+    margin-top: 0.25rem;
+  }
+
+  &:hover,
+  &:focus-within {
+    background-color: var(--post-hover-bg);
+  }
+
+  article {
+    position: relative;
+    padding-left: calc(#{$post-bar-width} + #{$post-bar-gap});
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: $post-bar-width;
+      border-radius: $post-bar-width;
+      background: $post-bar-color;
+    }
+  }
+}
+
+.post-list__title {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+
+  a {
+    text-decoration: none;
+
+    // Stretches the link over the whole post, highlight and all, so
+    // clicking anywhere in it opens the post. It's placed against the
+    // article, which sits inside the item's padding.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -$post-hover-padding;
+      border-radius: $radius;
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      &::after {
+        outline: 2px solid $color-accent;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
+.post-list__date {
+  margin: 0.25rem 0 0;
+  color: $color-accent;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.post-list__summary {
+  margin: 0.5rem 0 0;
+  color: $color-text-muted;
+}
+
+// The latest posts on the home page: a card like the callouts below it.
+.latest {
+  padding: 1.5rem;
+  background: $color-surface;
+  border: 2px solid $color-border;
+  border-radius: $radius;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
+
+  // Inset from the card's sides, so the highlight doesn't crowd its edges.
+  // The title and the All posts link keep the card's own padding.
+  .post-list {
+    --post-hover-bg: #{$color-bg};
+
+    margin: 0 0.5rem 1.25rem;
+  }
+}
+
+.latest__title {
+  margin: 0 0 1.25rem;
+  font-size: 1.35rem;
+}
+
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination__link {
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.pagination__status {
+  color: $color-text-muted;
+}
+
+// Letters of ordinal dates, such as the "th" of "28th", set by
+// _plugins/ordinal_superscript.rb. A line height of 0 stops them pushing
+// their line apart from the ones around it.
+.ordinal {
+  font-size: 0.65em;
+  line-height: 0;
+  vertical-align: super;
+}
+
+// A logo floated right, with the paragraph after it wrapping round it.
+.post-logo {
+  float: right;
+  margin: 0.25rem 0 1rem 1.5rem;
+
+  // Outranks the image rules of .page__content, which size from the width.
+  .page__content & img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: var(--logo-height, 10.625rem);
+    margin: 0;
+  }
+}
+
+// On a phone, logos at half size leave the text beside them room for a few
+// words.
+@media (width < 30rem) {
+  .post-logo {
+    margin-left: 1rem;
+
+    .page__content & img {
+      height: calc(var(--logo-height, 10.625rem) * 0.5);
+    }
+  }
+}
+
+// A section heading starts below a logo floated in the section before it.
+.post .page__content h2 {
+  clear: both;
+}
+
+// An excerpt of an email quoted in a post: a narrow card, set apart from
+// the post's own text.
+.page__content .email-excerpt {
+  max-width: 34rem;
+  margin: 2rem auto;
+  padding: 0.25rem 1.5rem;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-left: 4px solid $color-accent;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+}
+
 // Inline code in posts.
 .page__content code {
   padding: 0.1em 0.3em;
@@ -531,9 +899,9 @@ main {
 // Code snippets, rendered by _plugins/code_snippet.rb: one element per line
 // carrying its line number in the source file, shown in a gutter on the
 // left, and a bar underneath linking to those lines on GitHub.
-$code-gutter-bg: #faf6f0;
-$code-hover-bg: #f3ebdd;
-$code-number: #7a6a5c;
+$code-gutter-bg: var(--code-gutter-bg);
+$code-hover-bg: var(--code-hover-bg);
+$code-number: var(--code-number);
 
 .code-snippet {
   overflow: hidden;
@@ -660,7 +1028,7 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   .kv,
   .o,
   .ow {
-    color: #a8321c;
+    color: var(--code-keyword);
   }
 
   // Constants and numbers
@@ -670,26 +1038,26 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   .mi,
   .no,
   .bp {
-    color: #1f5a8a;
+    color: var(--code-constant);
   }
 
   // Functions
   .nf,
   .fm {
-    color: #6b3fa0;
+    color: var(--code-function);
   }
 
   // Types, classes, built-ins and JSX components
   .kt,
   .nb,
   .nc {
-    color: #0f6a6a;
+    color: var(--code-type);
   }
 
   // JSX attributes and object keys
   .na,
   .nl {
-    color: #8a5a00;
+    color: var(--code-attribute);
   }
 
   // Strings, including their delimiters
@@ -699,12 +1067,12 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   .sb,
   .dl,
   .sr {
-    color: #2f6b3a;
+    color: var(--code-string);
   }
 
   // ${…} inside a template string
   .si {
-    color: #a8321c;
+    color: var(--code-keyword);
   }
 
   .p {
@@ -803,7 +1171,7 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   // Stays visible while it shows the tick, even if the pointer has moved off.
   &--done {
     opacity: 1;
-    color: #2f6b3a;
+    color: var(--color-success);
   }
 
   @media (hover: none) {
@@ -866,6 +1234,20 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   border-color: #e3b8b8;
 }
 
+@media (prefers-color-scheme: dark) {
+  .contact-success {
+    color: #cde8cd;
+    background: #1e2c1f;
+    border-color: #3f5f40;
+  }
+
+  .contact-error {
+    color: #f4c9c9;
+    background: #361e1e;
+    border-color: #6e3838;
+  }
+}
+
 .form-field {
   display: flex;
   flex-direction: column;
@@ -891,7 +1273,7 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   padding: 0.65rem 1.5rem;
   font: inherit;
   font-weight: 600;
-  color: #fff;
+  color: $color-on-accent;
   background: $color-accent;
   border: 0;
   border-radius: 0.5rem;
@@ -911,6 +1293,13 @@ $code-gutter-edge: $code-gutter-width + $code-gutter-padding;
   color: $color-text-muted;
   font-size: 0.9rem;
   text-align: right;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem 1.5rem;
 }
 
 .footer-link {
@@ -961,7 +1350,7 @@ $diagram-modal-chrome: $diagram-modal-bar-height + 2 * $diagram-modal-padding;
   border-radius: $radius;
 
   &::backdrop {
-    background: rgb(36 26 16 / 70%);
+    background: var(--color-backdrop);
   }
 }
 

@@ -11,6 +11,10 @@ install:
 dev:
 	bundle exec jekyll serve --host 0.0.0.0 --port 4002
 
+# Run the site locally with live reload, including posts dated in the future (to preview a post before its date)
+dev-future:
+	bundle exec jekyll serve --future --host 0.0.0.0 --port 4002
+
 # Build the site and serve it like GitHub Pages does, without live reload (use it to check video, which `dev` can't serve reliably)
 preview: build
 	npx http-server _site -p 4003 -e html
@@ -43,6 +47,8 @@ lint-seo: build
 	test -f _site/sitemap.xml || { echo "missing _site/sitemap.xml"; exit 1; }
 	ruby -rrexml/document -e "REXML::Document.new(File.read('_site/sitemap.xml'))"
 	while IFS= read -r f; do
+		# jekyll-redirect-from's pages only send the browser on to the real one.
+		grep -q 'http-equiv="refresh"' "$f" && continue
 		grep -oE 'property="og:url" content="[^"]*"' "$f" | grep -q 'content="https://' \
 			|| { echo "$f: og:url is missing or not an absolute https URL"; exit 1; }
 		grep -oE 'rel="canonical" href="[^"]*"' "$f" | grep -q 'href="https://' \
@@ -54,19 +60,29 @@ lint-seo: build
 	done < <(find _site -name "*.html")
 	echo "SEO checks passed"
 
-# Check accessibility (WCAG2AA) with pa11y against every page in the sitemap
+# Check accessibility (WCAG2AA) with pa11y against every page in the sitemap, in the light colour scheme
 check-pa11y: build
+	just _pa11y .pa11yci.json
+
+# Check accessibility (WCAG2AA) with pa11y against every page in the sitemap, in the dark colour scheme
+check-pa11y-dark: build
+	just _pa11y .pa11yci-dark.json
+
+# Run pa11y-ci with the given config against every page in the sitemap
+_pa11y config:
 	#!/usr/bin/env bash
 	set -euo pipefail
-	npx http-server _site -p 4001 -e html -s >/dev/null 2>&1 &
+	# Run the server directly rather than through npx, which on Linux leaves it
+	# running in a child process when killed, holding the port for the next run.
+	node_modules/.bin/http-server _site -p 4001 -e html -s >/dev/null 2>&1 &
 	server_pid=$!
-	trap 'kill "$server_pid" 2>/dev/null' EXIT
+	trap 'kill "$server_pid" 2>/dev/null || true' EXIT
 	for i in $(seq 1 30); do
 		curl -sf http://localhost:4001/sitemap.xml >/dev/null && break
 		sleep 1
 	done
 	site_url=$(grep -E '^url:' _config.yml | sed -E 's/^url:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/')
-	npx pa11y-ci \
+	npx pa11y-ci --config {{config}} \
 		--sitemap http://localhost:4001/sitemap.xml \
 		--sitemap-find "$site_url" --sitemap-replace http://localhost:4001 \
 		--sitemap-exclude '\.pdf$'
@@ -75,8 +91,8 @@ check-pa11y: build
 check-lighthouse: build
 	npx lhci autorun
 
-# Check accessibility (pa11y and Lighthouse) against every page of the built site
-check-accessibility: check-pa11y check-lighthouse
+# Check accessibility (pa11y, in both colour schemes, and Lighthouse) against every page of the built site
+check-accessibility: check-pa11y check-pa11y-dark check-lighthouse
 
 # Check Ruby gems for known vulnerabilities against the ruby-advisory-db
 check-bundler-audit:

@@ -1,21 +1,21 @@
 ---
 layout: post
-title: "Satchel: Initial investigations"
+title: "Initial investigations"
 description: >-
   Where Satchel stands in October 2026: a first working prototype that saves
   a Scratch project to a Solid Pod, how it's built, what it doesn't do yet,
   what comes next, and where the ODI could help.
-permalink: /updates/2026-10-25-satchel-initial-investigations/
-# Shared directly ahead of the ODI interview: not linked from the rest of the
-# site, left out of the sitemap, and asking search engines not to index it.
-noindex: true
-sitemap: false
+# The address this post was first published at, and sent to the ODI with.
+redirect_from:
+  - /updates/2026-10-25-satchel-initial-investigations/
 # Where the code snippets are quoted from: the fork's initial-investigations
 # tag, so their line numbers and links stay accurate.
 code_source:
   repo: viboko/scratch-editor
   ref: initial-investigations
 ---
+
+I have an initial working proof-of-concept with demonstrates saving a Scratch project to a Solid pod.
 
 <!-- Code snippets and the video, diagram and collapsed section are HTML, or look
      like it to markdownlint, and the code inside a code_snippet tag looks

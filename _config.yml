@@ -16,7 +16,22 @@ contact:
   formspree_endpoint: "https://formspree.io/f/xwlpoanp"
 
 plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-redirect-from
   - jekyll-sitemap
+
+# Blog posts live under /blog/, and are listed there, newest first, ten to
+# a page (blog/index.html).
+permalink: /blog/:year-:month-:day-:title/
+paginate: 10
+paginate_path: /blog/page:num/
+
+defaults:
+  - scope:
+      type: posts
+    values:
+      layout: post
 
 markdown: kramdown
 
